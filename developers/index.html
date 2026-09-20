@@ -167,14 +167,19 @@
     </div>
 
     <h2 id="skills">Skills</h2>
-    <p><em>Coming: cross-harness working practices.</em> The engine already has
-    versioned skill storage (<code>create_skill</code>/<code>get_skill</code>/
-    <code>list_skills</code>/<code>update_skill</code>/<code>delete_skill</code>) scoped
-    to a context, readable today by any signed-in human session. The goal is one
-    canonical, org-owned skill an AI tool can pull on its own — Claude, or any
-    other MCP-speaking harness — instead of every tool keeping its own drifting
-    copy. Unattended, machine-authenticated access (so a harness can pull a skill
-    without a human signed in) is on the roadmap, not shipped yet.</p>
+    <p>One canonical, org-owned skill every AI tool your team runs can pull —
+    Claude, or any other MCP-speaking harness — instead of every tool keeping
+    its own drifting copy. Versioned skill storage
+    (<code>create_skill</code>/<code>get_skill</code>/<code>list_skills</code>/
+    <code>update_skill</code>/<code>delete_skill</code>), scoped to a context,
+    with optional bundled files beyond plain-text instructions
+    (<code>list_skill_files</code>/<code>get_skill_file</code>).</p>
+    <p>Works identically from a signed-in human session or an org API key, so
+    an unattended harness can pull a skill on its own — no human needs to be
+    signed in. Minting <em>additional</em> named-service API keys for more
+    harnesses is still CLI-only on our side today, not an MCP tool or a
+    self-serve web action — get in touch if you need more than the one key
+    <a href="/#access">signing up via MCP</a> gives you.</p>
 
     <h2 id="residency">Data residency</h2>
     <p>Set per organization at creation, and fixed after that:</p>

@@ -19,7 +19,7 @@ treated as final.
 
 | Domain | Role |
 |---|---|
-| **integratedai.co.uk** | Primary for this product. Not yet provisioned — see TODOS.md. |
+| **integratedai.co.uk** | Primary for this product. Live on AWS Amplify — see `deploy/terraform/`. |
 | dfens.ai | Sibling product (DFENS, AI-firewall). Privacy/legal notices live there only. |
 
 Note: `dfensai-site`'s own `BRAND.md` separately reserves `integratedaisolutions.net`
@@ -41,14 +41,21 @@ Reused from DFENS, adapted to a memory/MCP product instead of a firewall:
 - **Direct, technical, plain.** Say what the product does in concrete nouns:
   contexts, thoughts, tools, orgs, grants. No hype.
 - **Claims discipline.** Don't assert a capability the code doesn't have.
-  Skill distribution is real but human-session-only today — say so; the
-  self-serve portal doesn't exist yet — say so, don't imply otherwise.
+  Skill distribution works from a human session or an org API key as of
+  2026-09-20 — say so plainly, it's live, not a roadmap item. There's still
+  no self-serve *web* portal — a real self-serve signup path exists, but
+  it's a couple of plain HTTP calls (`onboarding.py`), never an MCP tool
+  call and never a web UI — say exactly that, don't blur the two.
 - **Engineer-to-engineer** on `/developers/`; a little more outcome-first on
   the landing page, matching DFENS's own audience split.
 - Avoid: "revolutionary", "AI-powered" as a selling point, unquantified
   absolutes ("never lose context"), and inventing specifics for entitlements
   the code names but doesn't fully describe (e.g. `background_scanners` —
-  described functionally, not with an invented mechanism).
+  described functionally, not with an invented mechanism). One logged
+  exception: `background_scanners` itself is described as current
+  ("bots that automatically capture context...") ahead of the code landing,
+  per an explicit 2026-09-20 decision in `PRODUCT.md` — still functional
+  only, no invented mechanism beyond that one sentence.
 
 ## Visual identity (ported verbatim from DFENS v1.0, see `../dfensai-site`)
 

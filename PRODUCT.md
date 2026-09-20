@@ -27,8 +27,9 @@ instead of each session starting from zero.
 
 This repository is the marketing site, not the engine — the engine lives in
 the public `dfens-mind` repo. The site's job is to move a qualified visitor
-into contact, since there's no self-serve signup portal yet (see
-Capabilities and Constraints).
+into contact or into self-serve signup via MCP (see Capabilities and
+Constraints — there's no web signup portal, but a real programmatic one
+does exist).
 
 ## Positioning
 
@@ -51,7 +52,9 @@ real org/role/grant model underneath it — not a flat notes file per repo.
   sibling dfensai-site's engineering pattern. CI (`check-links.sh`,
   `check-html.py`) runs on every push; `amplify.yml` is a sane default build
   spec, not a confirmed hosting decision (see TODOS.md).
-- **Domain:** `integratedai.co.uk`, not yet provisioned.
+- **Domain:** `integratedai.co.uk` — live on AWS Amplify as of 2026-09-20 (see
+  `deploy/terraform/`). The separate `mcp.integratedai.co.uk` deployment
+  hostname (for the actual `dfens-mind` server) is still a placeholder.
 - **Company:** DFENS AI Ltd — same legal entity as dfens.ai.
 
 ## Capabilities and Constraints
@@ -72,14 +75,47 @@ real org/role/grant model underneath it — not a flat notes file per repo.
   `europe-west1`, `us-central1`, `asia-northeast1`.
 - Skill distribution tools (`create_skill`/`get_skill`/`list_skills`/
   `update_skill`/`delete_skill`/`list_skill_files`/`get_skill_file`) are real,
-  shipped code — but human-OIDC-session-only. No unattended/API-key access
-  path exists yet (`TODOS.md` in `dfens-mind`, "Approach B"). **This site
-  describes skill distribution as a future/roadmap capability**, per an
-  explicit decision during this site's build, not as a live headline feature.
+  shipped code. **Update 2026-09-20:** `dfens-mind/TODOS.md`'s "Approach B"
+  (wiring `org_api_keys` into MCP auth) shipped today — every authorization
+  primitive, skill tools included, now works identically for a human OIDC
+  session or an org API key, so an unattended harness can pull skills on its
+  own. **This site now describes skill sharing as live**, superseding the
+  earlier "future/roadmap" framing. Still not self-serve: minting additional
+  named-service API keys (for more harnesses) is CLI-only (`manage_org.py`)
+  today, not an MCP tool — DFENS AI Ltd still does this directly. No live
+  HTTP-level verification against a running deployment has been done yet
+  either (unit/integration-tested only), per that same TODO entry.
+- Org bootstrap (`dfens-mind/onboarding.py`): real, unauthenticated
+  `POST /v1/organizations` → email-verify → `POST /v1/organizations/{id}/verify`
+  HTTP routes (deliberately not MCP tools — MCP requires auth that doesn't
+  exist pre-signup). Returns a live API key; new orgs default to the
+  Individual plan (`organizations.plan_id DEFAULT 'individual'`). This is a
+  genuine self-serve signup path — **not** a web portal, and its own
+  docstring flags beta-scope gaps (no CAPTCHA, in-memory per-process rate
+  limiting, no resend-code path).
+- `start_checkout(org_id, plan_id)` and `subscription_status(org_id)` are
+  real `@mcp.tool()` functions (not REST) — so upgrading from the free
+  Individual plan to Team/Enterprise happens as an MCP tool call once an org
+  exists, via a Odoo-hosted checkout link. Never handles card data directly.
 - Billing: `start_checkout` → Go admin-service → Odoo-hosted checkout,
   reconciled hourly via a Cloud Run job. Same Odoo instance/pattern as sibling
   product ai-firewall. Inbound Odoo webhook path is deliberately not wired
   yet — not a claim to make on the site.
+- `background_scanners` (Enterprise plan entitlement, `admin/plans.go`) is,
+  as of this site's code (2026-09-20), only a boolean feature flag — no
+  scanner service, ingestion bot, or automatic memory-population mechanism
+  exists in `dfens-mind` yet. **Decision 2026-09-20 (explicit, from the
+  account owner):** the site describes this as a current capability —
+  "bots that automatically capture context into memory from your team's
+  other tools" — ahead of the code landing, because the account owner is
+  building it now and expects it live by the time this site deploys. This
+  is a deliberate exception to this doc's usual "verified in code first"
+  rule, made knowingly, not a fabrication slipping through. Still don't
+  invent mechanism/source-integration specifics beyond that one sentence —
+  exactly which tools it connects to, how it's triggered, and what it
+  scans remain undecided (see Undecided, below). If this capability still
+  isn't live in `dfens-mind` by the time the site is promoted publicly,
+  this copy needs to be pulled or re-scoped back to "coming."
 
 **Commercial model** (`admin/plans.go` in `dfens-mind`, real committed
 defaults):
@@ -98,10 +134,14 @@ defaults):
 **Undecided, and not to be invented:**
 
 - The £20/seat Enterprise figure (code comment flags it unconfirmed).
-- Exact mechanism of the `background_scanners` entitlement.
+- Exact mechanism of the `background_scanners` entitlement — which sources
+  it connects to, how capture is triggered, what it scans. The one-sentence
+  functional description (see Capabilities, above) is presented as current;
+  everything past that sentence is still undecided.
 - Public availability / GA date — the product has no live paying customer yet
   (`dfens-mind/TODOS.md`).
-- `integratedai.co.uk` DNS/hosting — not provisioned.
+- The actual `dfens-mind` deployment behind `mcp.integratedai.co.uk` — not
+  provisioned yet (the site's own hosting at `integratedai.co.uk` is live).
 - Trademark clearance on "Integrated AI".
 - Final mark/logo — the connected-node placeholder mark is explicitly interim.
 
@@ -122,10 +162,16 @@ skills tools) during this site's build, 2026-09-20.
 **Absences that future work must not fabricate:**
 
 - No customers, testimonials, or usage numbers — pre-revenue.
-- No self-serve signup portal — every tier is set up directly by DFENS AI Ltd
-  today.
-- No live deployment URL for `integratedai.co.uk` yet.
+- No self-serve **web** signup portal. A self-serve signup path does exist
+  (`onboarding.py`'s HTTP bootstrap, see above) — don't describe it as a
+  portal/UI, and don't describe it as an MCP tool call (it isn't one).
+- No live deployment URL for `integratedai.co.uk` yet — `mcp.integratedai.co.uk`
+  is a placeholder hostname, flagged as such everywhere it appears.
 - No confirmed Enterprise per-seat price.
+- `background_scanners`'s exact mechanism (sources, triggers, scan
+  behavior) — the one-line functional description is a deliberate,
+  logged exception (see Capabilities, above); don't extend it further
+  without a new decision.
 
 ## Accessibility & Inclusion
 

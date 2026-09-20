@@ -17,7 +17,7 @@ index.html             Landing page — hero, the problem, how it works,
                         capabilities, tool table, works-with, security, pricing teaser
 pricing/index.html      Pricing page (Individual / Team / Enterprise + FAQ)
 developers/index.html   MCP client setup, auth, full tool reference, context/org model
-contact/index.html      Contact (no self-serve signup portal yet — see TODOS.md)
+contact/index.html      Contact — Odoo form, plus the self-serve-via-MCP path
 404.html                Not-found page
 PRODUCT.md              Durable product record (users, positioning, evidence on hand)
 TODOS.md                Site-specific follow-ups (DNS/hosting, cross-link, trademark check)
@@ -49,13 +49,23 @@ mentions them) as of 2026-09-20:
 - Plans (`admin/plans.go`): Individual free/hard-capped, Team £5/seat/month up
   to 20 seats, Enterprise custom (the code's £20/seat figure is flagged
   unconfirmed, so the site doesn't state it).
-- Skill distribution tools are real and shipped, but human-OIDC-session-only
-  today — the site deliberately describes this as a **future** capability, per
-  an explicit decision made while building this site, not a live headline
-  feature.
+- Skill distribution tools are real and shipped. As of 2026-09-20
+  (`dfens-mind/TODOS.md`, "Approach B"), they work from a human OIDC session
+  or an org API key identically — the site describes this as live, not a
+  future capability.
+- Org bootstrap (`onboarding.py`): real, unauthenticated HTTP routes (not MCP
+  tools) that create + verify an org and return a live API key, defaulting
+  to the free Individual plan. `start_checkout`/`subscription_status` *are*
+  real MCP tools, so upgrading plans happens without leaving the MCP client.
+- `background_scanners` (Enterprise) is, in the code, still just a boolean
+  plan flag with no implementation. The site describes it as a current
+  capability anyway — see `PRODUCT.md`'s Capabilities section for why
+  (explicit, logged exception: it's being built now, expected live by
+  deploy) and the exact one-sentence boundary on what's said about it.
 
-Nothing on the site asserts a capability the engine doesn't have, or implies a
-self-serve signup flow that doesn't exist yet.
+Nothing on the site asserts a capability the engine doesn't have. There's no
+self-serve *web* portal, but there is a real self-serve signup path over
+plain HTTP (never described as an MCP tool call, since it isn't one).
 
 ## Preview locally
 

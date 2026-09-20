@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Integrated AI — one shared memory for every AI tool</title>
-<meta name="description" content="Integrated AI (by DFENS AI) gives your team's AI tools a shared, semantically searchable memory. Capture a thought in one project, recall it weeks later in another — from Claude, or any MCP-speaking client.">
+<meta name="description" content="Integrated AI (by DFENS AI) gives your team or enterprise org a shared, semantically searchable memory and a shared skill library, across every MCP-speaking AI tool — Claude, Claude Code, or anything else.">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><line x1='50' y1='54' x2='50' y2='18' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='22' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='78' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><circle cx='50' cy='18' r='10' fill='%2322c55e'/><circle cx='22' cy='68' r='10' fill='%2322c55e'/><circle cx='78' cy='68' r='10' fill='%2322c55e'/><circle cx='50' cy='54' r='16' fill='%2308090B' stroke='%2322c55e' stroke-width='5'/></svg>">
 </head>
@@ -50,13 +50,16 @@
 <div class="wrap">
   <div class="hero hero-grid">
     <div>
-      <div class="eyebrow"><span class="dot"></span>Shared AI memory</div>
-      <h1>One memory. Every AI tool.</h1>
+      <div class="eyebrow"><span class="dot"></span>Shared memory &amp; skills for AI teams</div>
+      <h1>One memory. One skill set. Every AI tool.</h1>
       <p class="lede">
         Capture a thought in one project — a decision, a preference, running context
-        — and recall it weeks later, in a completely different repo, session, or AI
-        client. Integrated AI is a multi-tenant memory server your whole team's tools
-        share over <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a>.
+        — and recall it weeks later, from a different repo, session, or a
+        teammate's AI client entirely. Skills work the same way: write a working
+        practice once, and every tool your team or enterprise org runs — Claude
+        Code, Claude Desktop, or anything else speaking
+        <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a>
+        — pulls the same version.
       </p>
       <div class="cta-row">
         <a class="btn" href="#access">Sign up via MCP →</a>
@@ -176,7 +179,8 @@
         <div class="m-ico">🏢</div>
         <h3>Real multi-tenancy</h3>
         <p>One shared deployment serving many organizations, walled off by row-level
-        ownership in Postgres — not a separate deployment to run per company.</p>
+        ownership in Postgres — from a two-person team to an enterprise org, not a
+        separate deployment to run per company.</p>
         <ul>
           <li>owner / admin / member roles</li>
           <li>org-wide or per-user restricted contexts</li>
@@ -184,13 +188,27 @@
       </div>
       <div class="mandate">
         <div class="m-ico">🧭</div>
-        <h3>Skills across harnesses <span style="color:var(--muted); font-weight:600; font-size:12px; font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase;">— coming</span></h3>
-        <p>The same working practices, readable by every AI tool your team runs, not
-        just the one that wrote them — instead of copying instructions into each
-        harness's own format by hand.</p>
+        <h3>Skills across harnesses</h3>
+        <p>Write a working practice once and every AI tool your team runs pulls the
+        same version — instead of copying instructions into each harness's own
+        format by hand. Works from a human session or an org API key, so an
+        unattended harness can pull skills on its own too.</p>
         <ul>
-          <li>Versioned skill storage, already in the engine</li>
-          <li>Unattended/automated pulls: on the roadmap</li>
+          <li>Versioned, with bundled scripts/references/assets</li>
+          <li>Provisioning additional service keys for more harnesses: still set up
+          directly by us, not self-serve yet</li>
+        </ul>
+      </div>
+      <div class="mandate">
+        <div class="m-ico">🤖</div>
+        <h3>Automatic capture <span style="color:var(--muted); font-weight:600; font-size:12px; font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase;">— Enterprise</span></h3>
+        <p>Bots that capture context into memory automatically from your team's
+        other tools, running in the background — instead of relying on someone
+        remembering to write it down.</p>
+        <ul>
+          <li><code>background_scanners</code> entitlement</li>
+          <li>Exact sources and triggers scoped per org, in the Enterprise
+          conversation</li>
         </ul>
       </div>
     </div>
@@ -213,7 +231,7 @@
           <tr><td><code>browse_recent</code></td><td class="dim">List recent thoughts, optionally filtered by topic.</td></tr>
           <tr><td><code>view_stats</code></td><td class="dim">Total count, top topics, most recent thought.</td></tr>
           <tr><td><code>update_thought</code> / <code>delete_thought</code></td><td class="dim">Revise or remove an existing thought.</td></tr>
-          <tr><td><code>create_skill</code> / <code>get_skill</code> / <code>list_skills</code></td><td class="dim">Versioned, shared working practices scoped to a context — human-session access today.</td></tr>
+          <tr><td><code>create_skill</code> / <code>get_skill</code> / <code>list_skills</code></td><td class="dim">Versioned, shared working practices scoped to a context — usable from a human session or an org API key.</td></tr>
         </tbody>
       </table>
     </div>
@@ -282,7 +300,7 @@
     <h2>Start free. Scale by seat.</h2>
     <p class="sub">Individual is free, capped for a single user. Team is £5 per seat, per month,
     up to 20 seats. Enterprise adds bring-your-own OIDC, configurable retention,
-    and background content scanning.</p>
+    and bots that automatically capture context in the background.</p>
     <div class="cta-row" style="margin-top:8px;"><a class="btn ghost" href="/pricing/">See full pricing →</a></div>
   </div>
 </section>
