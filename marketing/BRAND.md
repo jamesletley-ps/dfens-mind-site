@@ -29,10 +29,17 @@ UK ccTLD) — not a conflict, but worth knowing both exist.
 
 ## Tagline
 
-Primary: **"One memory. Every AI tool."**
-Support line: **"Shared context for every harness, every agent."**
+Primary: **"Your AI already remembers. Your team doesn't."**
+Support line: **"One shared memory across your team — not just your own sessions."**
 Category: **"Shared AI memory"** — an MCP memory server, not a firewall; don't
 borrow DFENS's "AI Assurance" category language, it doesn't fit this product.
+
+**2026-09-20 decision:** lead with the team gap, not the tool gap. Per-session
+and per-tool AI memory already exists elsewhere (Claude's own memory, ChatGPT
+memory, Cursor rules) — that's not the argument to win. The one this product
+actually wins is that none of those travel to a *teammate*. Cross-tool support
+(MCP, any client) stays real and stays in the copy — eyebrow, subhead, and the
+"Works with your stack" section — just not as the headline hook anymore.
 
 ## Voice
 
