@@ -23,15 +23,23 @@ touched without a separate go-ahead.
 **Depends on:** None. Can be done any time; a live `integratedai.co.uk` isn't
 required first (the link works once DNS/hosting below is done).
 
-## Provision integratedai.co.uk DNS + hosting
+## ~~Provision integratedai.co.uk DNS + hosting~~ — done 2026-09-20
 
-**What:** Register/confirm the domain, choose a host (this site ships an
-`amplify.yml` matching the sibling site's pattern as a default, not a decided
-choice), and point DNS at it. Also provision `hello@integratedai.co.uk` with
-SPF/DKIM/DMARC — every CTA and the footer currently point at that address and
-it doesn't exist yet.
+Live on AWS Amplify (`deploy/terraform/`, app `dfens-mind-site`,
+`d93q94v8twmof`), apex + `www` both serving. The domain's Route53 zone
+already existed (Google Workspace mail was already wired there from before
+the "Integrated AI" → "DFENS AI" rebrand); `integratedai.co.uk` was also
+still claimed by `dfensai-site`'s own Amplify app (`integratedai-site`,
+leftover from before that rebrand) — that domain association was deleted
+there to free it up. See `deploy/terraform/README.md` for the full story
+and how to redeploy.
 
-**Priority:** P0 — nothing on this site works publicly until this is done.
+**Still outstanding:** confirm the `hello@integratedai.co.uk` mailbox is
+actually provisioned in Google Workspace (DNS-side MX/SPF/DKIM already
+existed and were left untouched by this change) — every CTA and the footer
+point at that address.
+
+**Priority:** P1 — mailbox check before public launch.
 
 ## Trademark check on "Integrated AI"
 

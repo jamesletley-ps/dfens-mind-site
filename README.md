@@ -79,24 +79,26 @@ internal collateral must never be served.
 
 ## Deploy
 
-Not yet provisioned (see `TODOS.md`). `amplify.yml` ships a build spec
-matching the sibling `dfensai-site`'s AWS Amplify Hosting pattern as a sane
-default — push to `main` → live, if that hosting choice is confirmed. The site
-has no build step, so any static host works (Cloudflare Pages, Netlify,
-GitHub Pages, S3+CloudFront, nginx) if a different one is chosen instead.
+Live on AWS Amplify Hosting, provisioned via Terraform in
+`deploy/terraform/` (app `dfens-mind-site`) — push to `main` auto-deploys
+using `amplify.yml`, matching the sibling `dfensai-site`'s pattern. See
+`deploy/terraform/README.md` for how to change infra (IAM policy needed,
+the two-apply domain-association caveat, teardown).
 
 ### Domain setup
 
 | Domain | Status |
 |---|---|
-| integratedai.co.uk | Primary. Not yet registered/pointed — see `TODOS.md`. |
+| integratedai.co.uk | Primary. Live — apex + `www` both point at this Amplify app. |
 | dfens.ai | Sibling product. Privacy/legal notices live there only; this site links out rather than duplicating them. |
 
-Also needed before launch: `hello@integratedai.co.uk` mailbox with
-SPF/DKIM/DMARC (every CTA on the site points at this address).
+`hello@integratedai.co.uk`'s DNS-side MX/SPF/DKIM already existed before
+this site was hosted (left over from Google Workspace setup); confirming the
+mailbox itself is provisioned is tracked in `TODOS.md`.
 
 ## Before public launch (TODOs left in the files)
 
-See `TODOS.md` for the full list: DNS/hosting, the dfensai-site reciprocal
-link, a trademark check on "Integrated AI", final mark/logo design, and the
-placeholder deployment hostname in `developers/index.html`.
+See `TODOS.md` for the full list: confirming the `hello@` mailbox, the
+dfensai-site reciprocal link, a trademark check on "Integrated AI", final
+mark/logo design, and the placeholder deployment hostname in
+`developers/index.html`.

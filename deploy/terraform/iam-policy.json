@@ -1,0 +1,64 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AmplifyManageApp",
+      "Effect": "Allow",
+      "Action": [
+        "amplify:CreateApp",
+        "amplify:GetApp",
+        "amplify:UpdateApp",
+        "amplify:DeleteApp",
+        "amplify:ListApps",
+        "amplify:TagResource",
+        "amplify:UntagResource",
+        "amplify:ListTagsForResource",
+        "amplify:CreateBranch",
+        "amplify:GetBranch",
+        "amplify:UpdateBranch",
+        "amplify:DeleteBranch",
+        "amplify:ListBranches",
+        "amplify:CreateDomainAssociation",
+        "amplify:GetDomainAssociation",
+        "amplify:UpdateDomainAssociation",
+        "amplify:DeleteDomainAssociation",
+        "amplify:ListDomainAssociations",
+        "amplify:CreateWebhook",
+        "amplify:GetWebhook",
+        "amplify:DeleteWebhook",
+        "amplify:ListWebhooks"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AmplifyServiceLinkedRoleFirstUse",
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "arn:aws:iam::*:role/aws-service-role/amplify.amazonaws.com/AWSServiceRoleForAmplify*",
+      "Condition": {
+        "StringEquals": { "iam:AWSServiceName": "amplify.amazonaws.com" }
+      }
+    },
+    {
+      "Sid": "Route53ManageIntegratedAiZone",
+      "Effect": "Allow",
+      "Action": [
+        "route53:GetHostedZone",
+        "route53:ListResourceRecordSets",
+        "route53:ChangeResourceRecordSets",
+        "route53:ListTagsForResource"
+      ],
+      "Resource": "arn:aws:route53:::hostedzone/Z1K92X884HVT4F"
+    },
+    {
+      "Sid": "Route53LookupAndChangeStatus",
+      "Effect": "Allow",
+      "Action": [
+        "route53:ListHostedZones",
+        "route53:ListHostedZonesByName",
+        "route53:GetChange"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
