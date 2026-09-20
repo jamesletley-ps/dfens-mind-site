@@ -37,7 +37,7 @@
             </div>
           </details>
         </li>
-        <li><a class="btn" href="/contact/"><span class="cta-full">Get started</span><span class="cta-short">Start</span></a></li>
+        <li><a class="btn" href="/contact/"><span class="cta-full">Talk to us</span><span class="cta-short">Talk</span></a></li>
       </ul>
     </nav>
   </div>
@@ -71,7 +71,7 @@
         <li>Federated OIDC sign-in</li>
         <li>At the cap, calls are refused — never silently dropped</li>
       </ul>
-      <a class="btn ghost tier-cta" href="/contact/">Get started free</a>
+      <a class="btn ghost tier-cta" href="/contact/">Request free access</a>
     </div>
 
     <div class="tier tier-featured">
@@ -85,7 +85,7 @@
         <li>Usage billed, not hard-capped</li>
         <li><code>owner</code> / <code>admin</code> / <code>member</code> roles, restricted contexts</li>
       </ul>
-      <a class="btn tier-cta" href="/contact/">Start on Team</a>
+      <a class="btn tier-cta" href="/contact/">Request Team access</a>
     </div>
 
     <div class="tier">
@@ -140,13 +140,34 @@
 <section id="access">
   <div class="wrap" data-reveal>
     <div class="access">
-      <div class="kicker">Get started</div>
-      <h2>Tell us about your team.</h2>
-      <p class="sub">Share how many people, which AI tools they use today, and any data-residency
-      requirement — we'll come back with next steps, usually within a business day.</p>
+      <div class="kicker">Sign up via MCP</div>
+      <h2>Start on Individual free — right from the terminal.</h2>
+      <p class="sub">No web signup form. Two HTTP calls create and verify your org on
+      the free plan; upgrading to Team or Enterprise from there is a real MCP tool
+      call, not a separate checkout page.</p>
+
+      <div style="text-align:left; max-width:560px; margin:32px auto 0;">
+        <div class="term">
+          <div class="term-bar"><span></span><span></span><span></span><span class="t">bootstrap — plain HTTP, not MCP</span></div>
+          <pre><span class="c">// creates + verifies your org, returns a live api_key</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations \
+  -d <span class="g">'{"name":"Acme Inc","contact_email":"you@acme.com"}'</span>
+<span class="c">// → check your email for a code, then POST it to .../verify</span></pre>
+        </div>
+        <p style="margin-top:20px;">Full walkthrough, including the MCP client config
+        and the <code>start_checkout</code> tool call that upgrades your plan, is on
+        the <a href="/#access">homepage</a>.</p>
+        <div class="note-box warn" style="margin-top:20px;">
+          <span class="nb-label">Placeholder hostname</span>
+          <p><code>mcp.integratedai.co.uk</code> isn't provisioned yet — this page
+          ships ahead of the live server. Use the contact path below in the
+          meantime.</p>
+        </div>
+      </div>
+
       <div class="cta-row">
-        <a class="btn" href="/contact/">Get started</a>
-        <a class="btn ghost" href="mailto:hello@integratedai.co.uk?subject=Integrated%20AI%20pricing%20enquiry">Email us directly</a>
+        <a class="btn" href="/contact/">Tell us about your team</a>
+        <a class="btn ghost" href="mailto:hello@integratedai.co.uk?subject=Integrated%20AI%20pricing%20enquiry">Prefer email? Write to us</a>
       </div>
       <p class="fine">hello@integratedai.co.uk</p>
     </div>

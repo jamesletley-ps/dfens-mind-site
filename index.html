@@ -39,7 +39,7 @@
             </div>
           </details>
         </li>
-        <li><a class="btn" href="/contact/"><span class="cta-full">Get started</span><span class="cta-short">Start</span></a></li>
+        <li><a class="btn" href="/contact/"><span class="cta-full">Talk to us</span><span class="cta-short">Talk</span></a></li>
       </ul>
     </nav>
   </div>
@@ -53,14 +53,13 @@
       <div class="eyebrow"><span class="dot"></span>Shared AI memory</div>
       <h1>One memory. Every AI tool.</h1>
       <p class="lede">
-        Integrated AI is a multi-tenant memory server your team's AI tools read and
-        write to over <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a>.
         Capture a thought in one project — a decision, a preference, running context
-        — and recall it weeks later, from a completely different repo, session, or
-        AI client.
+        — and recall it weeks later, in a completely different repo, session, or AI
+        client. Integrated AI is a multi-tenant memory server your whole team's tools
+        share over <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a>.
       </p>
       <div class="cta-row">
-        <a class="btn" href="/contact/">Get started</a>
+        <a class="btn" href="#access">Sign up via MCP →</a>
         <a class="btn ghost" href="/developers/">Read the docs</a>
       </div>
       <p class="note">Built on <a href="https://github.com/jamesletley-ps/dfens-mind" target="_blank" rel="noopener">DFENS Mind</a>, our open MCP server. By DFENS AI Ltd, the team behind <a href="https://dfens.ai">dfens.ai</a>.</p>
@@ -291,14 +290,58 @@
 <section id="access">
   <div class="wrap" data-reveal>
     <div class="access">
-      <div class="kicker">Get started</div>
-      <h2>Give your team's AI tools a memory that outlasts the session.</h2>
-      <p class="sub">Integrated AI is early: there's no self-serve signup portal yet. Tell us about
-      your team and we'll get your organization set up directly, usually within a
-      business day.</p>
+      <div class="kicker">Sign up via MCP</div>
+      <h2>Create your organization straight from the terminal.</h2>
+      <p class="sub">There's no web signup form. Two HTTP calls create and verify your
+      org; everything after that — including upgrading your plan — is a real MCP
+      tool call.</p>
+
+      <div style="text-align:left; max-width:640px; margin:32px auto 0;">
+        <div class="term">
+          <div class="term-bar"><span></span><span></span><span></span><span class="t">bootstrap — plain HTTP, not MCP</span></div>
+          <pre><span class="c">// 1. Create your organization (free Individual plan by default)</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations \
+  -d <span class="g">'{"name":"Acme Inc","contact_email":"you@acme.com"}'</span>
+<span class="c">// → {"org_id": "…", "status": "pending_verification"}</span>
+
+<span class="c">// 2. Check your email for a code, then verify</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations/&lt;org_id&gt;/verify \
+  -d <span class="g">'{"code":"123456"}'</span>
+<span class="c">// → {"status": "active", "plan_id": "individual", "api_key": "sk_live_…"}</span></pre>
+        </div>
+
+        <p style="margin-top:24px;">Put that <code>api_key</code> into your MCP client
+        config as a bearer token, and you're live:</p>
+
+        <div class="term">
+          <div class="term-bar"><span></span><span></span><span></span><span class="t">~/.claude.json</span></div>
+          <pre>{
+  <span class="g">"mcpServers"</span>: {
+    <span class="g">"integrated-ai"</span>: {
+      <span class="g">"type"</span>: <span class="g">"http"</span>,
+      <span class="g">"url"</span>: <span class="g">"https://mcp.integratedai.co.uk/mcp"</span>,
+      <span class="g">"headers"</span>: { <span class="g">"Authorization"</span>: <span class="g">"Bearer &lt;api_key&gt;"</span> }
+    }
+  }
+}</pre>
+        </div>
+
+        <p style="margin-top:24px;"><code>capture_thought</code> and
+        <code>search_thoughts</code> work immediately on the free plan. Ready for a
+        team? <code>start_checkout(org_id, plan_id)</code> is a real MCP tool call —
+        it returns a hosted checkout link, and card details never touch us
+        directly.</p>
+
+        <div class="note-box warn" style="margin-top:24px;">
+          <span class="nb-label">Placeholder hostname</span>
+          <p><code>mcp.integratedai.co.uk</code> isn't provisioned yet — this page
+          ships ahead of the live server. See <a href="/developers/">developers</a>
+          for the current state, or use the contact path below.</p>
+        </div>
+      </div>
+
       <div class="cta-row">
-        <a class="btn" href="/contact/">Get started</a>
-        <a class="btn ghost" href="/developers/">Read the docs</a>
+        <a class="btn ghost" href="/contact/">Prefer we set it up? Talk to us</a>
       </div>
       <p class="fine">hello@integratedai.co.uk</p>
     </div>
