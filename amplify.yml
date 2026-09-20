@@ -1,0 +1,22 @@
+# AWS Amplify Hosting build spec (Git-based deploy), matching the sibling
+# dfensai-site's shape — ships as a sane default, not a decided hosting
+# choice. See TODOS.md.
+#
+# The site is static with no build step; this phase just assembles the publish
+# directory so that ONLY the web files are served — marketing/, docs/, scripts/
+# and README.md never reach the deploy artifact even though they live in the
+# repo. `baseDirectory: dist` is what Amplify uploads to its CDN.
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - rm -rf dist && mkdir -p dist
+        - cp index.html 404.html dist/
+        - cp -r pricing developers contact assets dist/
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths: []

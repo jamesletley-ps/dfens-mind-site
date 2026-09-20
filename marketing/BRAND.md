@@ -1,0 +1,79 @@
+# Brand guide — Integrated AI (by DFENS AI)
+
+**Status: placeholder.** This brand pass reuses DFENS AI Ltd's existing design
+system (`../dfensai-site/marketing/BRAND.md`) verbatim — palette, type, motion,
+voice — with a new wordmark, a new placeholder mark, and copy grounded in
+DFENS Mind instead of the AI-firewall product. The user intends to refine this
+with Claude Code once the product is closer to launch. Nothing here should be
+treated as final.
+
+## Names
+
+| Thing | Name | Notes |
+|---|---|---|
+| Company | **DFENS AI Ltd** | Same legal entity as dfens.ai. Registered legal name in every formal/legal context — footer copyright, boilerplate, the privacy notice (published only on dfens.ai). |
+| Product / site brand | **Integrated AI** | Set plain (no tracking gimmick yet — unlike DFENS's wide-tracked wordmark). Endorsement tag "by DFENS AI" shown small next to it. |
+| Underlying engine | **DFENS Mind** | The public, open MCP server (`github.com/jamesletley-ps/dfens-mind`) — unlike `ai-firewall`, this one is NOT internal-only; it's fine to name and link to it. |
+
+## Domains
+
+| Domain | Role |
+|---|---|
+| **integratedai.co.uk** | Primary for this product. Not yet provisioned — see TODOS.md. |
+| dfens.ai | Sibling product (DFENS, AI-firewall). Privacy/legal notices live there only. |
+
+Note: `dfensai-site`'s own `BRAND.md` separately reserves `integratedaisolutions.net`
+as a defensive redirect domain to dfens.ai. That's a different domain
+(`.net`, redirect-only) from this product's live `integratedai.co.uk` (`.co.uk`,
+UK ccTLD) — not a conflict, but worth knowing both exist.
+
+## Tagline
+
+Primary: **"One memory. Every AI tool."**
+Support line: **"Shared context for every harness, every agent."**
+Category: **"Shared AI memory"** — an MCP memory server, not a firewall; don't
+borrow DFENS's "AI Assurance" category language, it doesn't fit this product.
+
+## Voice
+
+Reused from DFENS, adapted to a memory/MCP product instead of a firewall:
+
+- **Direct, technical, plain.** Say what the product does in concrete nouns:
+  contexts, thoughts, tools, orgs, grants. No hype.
+- **Claims discipline.** Don't assert a capability the code doesn't have.
+  Skill distribution is real but human-session-only today — say so; the
+  self-serve portal doesn't exist yet — say so, don't imply otherwise.
+- **Engineer-to-engineer** on `/developers/`; a little more outcome-first on
+  the landing page, matching DFENS's own audience split.
+- Avoid: "revolutionary", "AI-powered" as a selling point, unquantified
+  absolutes ("never lose context"), and inventing specifics for entitlements
+  the code names but doesn't fully describe (e.g. `background_scanners` —
+  described functionally, not with an invented mechanism).
+
+## Visual identity (ported verbatim from DFENS v1.0, see `../dfensai-site`)
+
+- **Palette:** Signal `#22c55e` (accent), Ink `#08090B` (canvas), Panel
+  `#0F1217`, Steel `#1A1E26`, Bone `#EDEFF2` (text), Mist `#9BA3AF`, Slate
+  `#828C9B` (muted text), Slate deep `#5B6472` (non-text only), Pass/Flag/Block
+  verdict scale kept for table pills.
+- **Type:** Archivo (display/UI) + JetBrains Mono (labels/code), self-hosted
+  under `assets/fonts/`.
+- **Motion:** fast, mechanical, 120–420ms, ease-out, `prefers-reduced-motion`
+  honored. DFENS's animated "gate" hero (packets passing/blocking through a
+  firewall) and rule-fire ticker are deliberately **not** ported — they
+  narrate a firewall's decision loop, which doesn't apply here, and a static
+  product (pre-revenue, no live traffic yet) showing fabricated "live"
+  activity would violate the same claims-discipline this brand is meant to
+  inherit.
+- **Mark:** new placeholder — three nodes on spokes around a hollow hub, in
+  Signal green, meant to read as "many tools, one shared store." Simple by
+  design; not a final logo.
+- **Accessibility:** WCAG 2.1 AA target, same as DFENS.
+
+## Boilerplate (footer)
+
+> Integrated AI gives your team's AI tools a shared, semantically searchable
+> memory — capture a thought in one project, recall it weeks later in
+> another, from Claude or any MCP-speaking client. Integrated AI is a DFENS AI
+> Ltd product; DFENS AI Ltd also builds DFENS, self-hosted AI Assurance for
+> LLM traffic (dfens.ai). Based in the United Kingdom.

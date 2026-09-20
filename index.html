@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrated AI — one shared memory for every AI tool</title>
+<meta name="description" content="Integrated AI (by DFENS AI) gives your team's AI tools a shared, semantically searchable memory. Capture a thought in one project, recall it weeks later in another — from Claude, or any MCP-speaking client.">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><line x1='50' y1='54' x2='50' y2='18' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='22' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='78' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><circle cx='50' cy='18' r='10' fill='%2322c55e'/><circle cx='22' cy='68' r='10' fill='%2322c55e'/><circle cx='78' cy='68' r='10' fill='%2322c55e'/><circle cx='50' cy='54' r='16' fill='%2308090B' stroke='%2322c55e' stroke-width='5'/></svg>">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="/">
+        <svg class="mark-svg" viewBox="12 8 76 70" width="22" height="20" aria-hidden="true"><line x1="50" y1="54" x2="50" y2="18" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="22" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="78" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><circle cx="50" cy="18" r="7" fill="#22c55e"></circle><circle cx="22" cy="68" r="7" fill="#22c55e"></circle><circle cx="78" cy="68" r="7" fill="#22c55e"></circle><circle cx="50" cy="54" r="13" fill="#08090B" stroke="#22c55e" stroke-width="3.5"></circle></svg>
+        <span>Integrated AI<span class="co"> · by DFENS AI</span></span>
+      </a>
+      <ul>
+        <li class="hide-m"><a href="#how">How it works</a></li>
+        <li class="hide-m"><a href="#capabilities">Capabilities</a></li>
+        <li class="hide-m"><a href="#security">Security</a></li>
+        <li class="hide-m"><a href="/developers/">Developers</a></li>
+        <li class="hide-m"><a href="/pricing/">Pricing</a></li>
+        <li>
+          <details class="nav-more">
+            <summary>Menu</summary>
+            <div class="nav-more-panel">
+              <a href="#how">How it works</a>
+              <a href="#capabilities">Capabilities</a>
+              <a href="#tools">Tools</a>
+              <a href="#security">Security</a>
+              <a href="/developers/">Developers</a>
+              <a href="/pricing/">Pricing</a>
+              <a href="/contact/">Contact</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="btn" href="/contact/"><span class="cta-full">Get started</span><span class="cta-short">Start</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="wrap">
+  <div class="hero hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>Shared AI memory</div>
+      <h1>One memory. Every AI tool.</h1>
+      <p class="lede">
+        Integrated AI is a multi-tenant memory server your team's AI tools read and
+        write to over <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a>.
+        Capture a thought in one project — a decision, a preference, running context
+        — and recall it weeks later, from a completely different repo, session, or
+        AI client.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="/contact/">Get started</a>
+        <a class="btn ghost" href="/developers/">Read the docs</a>
+      </div>
+      <p class="note">Built on <a href="https://github.com/jamesletley-ps/dfens-mind" target="_blank" rel="noopener">DFENS Mind</a>, our open MCP server. By DFENS AI Ltd, the team behind <a href="https://dfens.ai">dfens.ai</a>.</p>
+    </div>
+    <div>
+      <div class="term">
+        <div class="term-bar"><span></span><span></span><span></span><span class="t">mcp — integrated-ai</span></div>
+        <pre><span class="c">// context id resolved earlier via list_contexts()</span>
+<span class="k">capture_thought</span>(
+  context: <span class="g">"proj-9f2…"</span>,
+  content: <span class="g">"Retry Odoo checkout on 503, not just timeout"</span>,
+  topics: [<span class="g">"billing"</span>, <span class="g">"odoo"</span>]
+)
+<span class="c">// → saved. three weeks later, different repo:</span>
+
+<span class="k">search_thoughts</span>(
+  context: <span class="g">"proj-9f2…"</span>,
+  query: <span class="g">"why does checkout retry"</span>
+)
+<span class="c">// → semantic match, same thought, no re-explaining</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats" data-reveal>
+    <div><div class="hs-n">1 server</div><p>Every project, one shared memory — not one silo per repo.</p></div>
+    <div><div class="hs-n">Any client</div><p>Claude, Claude Code, or any MCP-speaking harness.</p></div>
+    <div><div class="hs-n">3 regions</div><p>Data residency: EU, US, and APAC.</p></div>
+    <div><div class="hs-n">OIDC + OAuth 2.1</div><p>Federated sign-in, no shared secrets.</p></div>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">01</span><span class="k-r"></span>The problem</div>
+    <h2>Your AI sessions don't remember each other.</h2>
+    <p class="sub">Every AI coding session starts scoped to a working directory. Decisions made
+    Monday in one repo are invisible Thursday in another — even to the same person,
+    even in the same team.</p>
+    <div class="mandates">
+      <div class="mandate">
+        <div class="m-ico">↺</div>
+        <h3>Repo-scoped memory</h3>
+        <p>Context a session builds up lives and dies with that session. Move to a
+        different project and you're explaining the same decisions again.</p>
+      </div>
+      <div class="mandate">
+        <div class="m-ico">👤</div>
+        <h3>Individual heroics</h3>
+        <p>Whoever set up a working practice first becomes the single point of
+        knowledge for it. It doesn't travel to a teammate, or to a different AI tool.</p>
+      </div>
+      <div class="mandate">
+        <div class="m-ico">⧉</div>
+        <h3>Vendor silos</h3>
+        <p>Standardize on one AI harness and every other one falls behind — or you
+        hand-copy the same instructions into each tool's own format.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">02</span><span class="k-r"></span>How it works</div>
+    <h2>Contexts are the unit of memory.</h2>
+    <p class="sub">Every thought lives inside a <code>context</code> — an opaque id, not a name you
+    can guess. A context belongs to one organization and is either open to every
+    member, or restricted to an explicit grant. Every person also gets one private
+    personal context automatically.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01</span>
+        <h3>List your contexts</h3>
+        <p><code>list_contexts()</code> returns every context you can access — id, name,
+        and description. It's the only way to get a valid <code>context</code> id;
+        there's no default and no way to guess one.</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <h3>Capture and recall</h3>
+        <p><code>capture_thought</code> saves a note. <code>search_thoughts</code> finds it
+        again by meaning, not just keywords — embedded with Vertex AI's
+        <code>gemini-embedding-001</code>. <code>browse_recent</code> and
+        <code>view_stats</code> round out day-to-day use.</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <h3>Org membership gates access</h3>
+        <p>Every context belongs to an org. <code>org</code>-visibility contexts are open
+        to every member automatically; <code>restricted</code> ones need an explicit
+        grant. Owners and admins manage both.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">03</span><span class="k-r"></span>Capabilities</div>
+    <h2>A shared memory, built for teams — not just one session.</h2>
+    <div class="mandates">
+      <div class="mandate">
+        <div class="m-ico">🔎</div>
+        <h3>Semantic recall</h3>
+        <p>Search by meaning, not exact phrasing. A thought captured about "checkout
+        retries" surfaces when you later ask why Odoo keeps retrying.</p>
+        <ul>
+          <li>capture_thought / search_thoughts / browse_recent</li>
+          <li>update_thought / delete_thought / view_stats</li>
+        </ul>
+      </div>
+      <div class="mandate">
+        <div class="m-ico">🏢</div>
+        <h3>Real multi-tenancy</h3>
+        <p>One shared deployment serving many organizations, walled off by row-level
+        ownership in Postgres — not a separate deployment to run per company.</p>
+        <ul>
+          <li>owner / admin / member roles</li>
+          <li>org-wide or per-user restricted contexts</li>
+        </ul>
+      </div>
+      <div class="mandate">
+        <div class="m-ico">🧭</div>
+        <h3>Skills across harnesses <span style="color:var(--muted); font-weight:600; font-size:12px; font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase;">— coming</span></h3>
+        <p>The same working practices, readable by every AI tool your team runs, not
+        just the one that wrote them — instead of copying instructions into each
+        harness's own format by hand.</p>
+        <ul>
+          <li>Versioned skill storage, already in the engine</li>
+          <li>Unattended/automated pulls: on the roadmap</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">04</span><span class="k-r"></span>The tool surface</div>
+    <h2>Everything a session can call, in one table.</h2>
+    <p class="sub">A thin MCP layer over Postgres and pgvector. No hidden defaults: every tool but
+    <code>list_contexts</code> requires an explicit <code>context</code> id.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>list_contexts()</code></td><td class="dim">Every context you can access — the only way to get a valid id.</td></tr>
+          <tr><td><code>capture_thought</code></td><td class="dim">Save a new thought, with optional topics and people.</td></tr>
+          <tr><td><code>search_thoughts</code></td><td class="dim">Semantic search within a context.</td></tr>
+          <tr><td><code>browse_recent</code></td><td class="dim">List recent thoughts, optionally filtered by topic.</td></tr>
+          <tr><td><code>view_stats</code></td><td class="dim">Total count, top topics, most recent thought.</td></tr>
+          <tr><td><code>update_thought</code> / <code>delete_thought</code></td><td class="dim">Revise or remove an existing thought.</td></tr>
+          <tr><td><code>create_skill</code> / <code>get_skill</code> / <code>list_skills</code></td><td class="dim">Versioned, shared working practices scoped to a context — human-session access today.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-note">Org-management tools (membership, roles, context grants) sit behind
+    <code>owner</code>/<code>admin</code> role checks. Full reference: <a href="/developers/">developers</a>.</p>
+  </div>
+</section>
+
+<section id="works-with">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">05</span><span class="k-r"></span>Works with your stack</div>
+    <h2>One memory server, any MCP client.</h2>
+    <div class="providers">
+      <div class="prov">
+        <div class="prov-name">Claude</div>
+        <p class="prov-detail">Claude.ai, Claude Desktop, and the Claude API — anywhere Claude can reach a
+        remote MCP server.</p>
+      </div>
+      <div class="prov">
+        <div class="prov-name">Claude Code</div>
+        <p class="prov-detail">Add it under <code>mcpServers</code> in your project config; every session
+        gets the same shared memory, no per-repo setup.</p>
+      </div>
+      <div class="prov">
+        <div class="prov-name">Any MCP client</div>
+        <p class="prov-detail">Streamable HTTP, standard OAuth 2.1 + PKCE. No proprietary SDK — if it
+        speaks MCP, it can read and write here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">06</span><span class="k-r"></span>Security &amp; tenancy</div>
+    <h2>Federated sign-in. Row-level isolation. No shared secrets.</h2>
+    <div class="split">
+      <ul>
+        <li><strong>Federated OIDC sign-in.</strong> Google, Okta, Microsoft Entra, or a self-hosted
+        identity provider — any standards-compliant issuer works via
+        <code>.well-known/openid-configuration</code> discovery.</li>
+        <li><strong>Our own OAuth 2.1 authorization server.</strong> Dynamic client registration and
+        the standard authorization-code + PKCE flow, minting RS256-signed JWTs as the
+        access/refresh tokens clients actually use.</li>
+        <li><strong>Postgres + pgvector, row-level tenancy.</strong> Every context and thought
+        carries an <code>org_id</code>; access checks run on every call.</li>
+        <li><strong>Data residency.</strong> <code>europe-west1</code>, <code>us-central1</code>,
+        <code>asia-northeast1</code> — set per organization at creation.</li>
+      </ul>
+      <div class="term">
+        <div class="term-bar"><span></span><span></span><span></span><span class="t">auth — every call</span></div>
+        <pre><span class="c">// _require_access, server.py</span>
+<span class="k">bearer</span> → <span class="g">email</span> (RS256 JWT, verified)
+<span class="k">check</span>  → org member? <span class="g">yes</span>
+<span class="k">check</span>  → context restricted? → grant on file? <span class="g">yes</span>
+<span class="c">// no membership or grant:</span>
+<span class="r">forbidden</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing-teaser">
+  <div class="wrap" data-reveal>
+    <div class="kicker"><span class="k-n">07</span><span class="k-r"></span>Pricing</div>
+    <h2>Start free. Scale by seat.</h2>
+    <p class="sub">Individual is free, capped for a single user. Team is £5 per seat, per month,
+    up to 20 seats. Enterprise adds bring-your-own OIDC, configurable retention,
+    and background content scanning.</p>
+    <div class="cta-row" style="margin-top:8px;"><a class="btn ghost" href="/pricing/">See full pricing →</a></div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap" data-reveal>
+    <div class="access">
+      <div class="kicker">Get started</div>
+      <h2>Give your team's AI tools a memory that outlasts the session.</h2>
+      <p class="sub">Integrated AI is early: there's no self-serve signup portal yet. Tell us about
+      your team and we'll get your organization set up directly, usually within a
+      business day.</p>
+      <div class="cta-row">
+        <a class="btn" href="/contact/">Get started</a>
+        <a class="btn ghost" href="/developers/">Read the docs</a>
+      </div>
+      <p class="fine">hello@integratedai.co.uk</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="/">
+          <svg class="mark-svg" viewBox="12 8 76 70" width="21" height="19" aria-hidden="true"><line x1="50" y1="54" x2="50" y2="18" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="22" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="78" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><circle cx="50" cy="18" r="7" fill="#22c55e"></circle><circle cx="22" cy="68" r="7" fill="#22c55e"></circle><circle cx="78" cy="68" r="7" fill="#22c55e"></circle><circle cx="50" cy="54" r="13" fill="#08090B" stroke="#22c55e" stroke-width="3.5"></circle></svg>
+          <span>Integrated AI</span>
+        </a>
+        <p style="margin-top:12px; max-width:340px; color:var(--text-dim);">Shared, semantically searchable memory for every AI tool your team uses. By
+        DFENS AI Ltd — makers of <a href="https://dfens.ai">DFENS</a>, self-hosted AI
+        Assurance for LLM traffic.</p>
+      </div>
+      <div class="cols">
+        <div>
+          <p class="foot-h">Product</p>
+          <ul>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#capabilities">Capabilities</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="/developers/">Developers</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="foot-h">Company</p>
+          <ul>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="https://dfens.ai">dfens.ai</a></li>
+            <li><a href="https://dfens.ai/privacy">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="legal">&copy; 2026 DFENS AI Ltd. Integrated AI is a DFENS AI Ltd product. Privacy and legal notices are published at <a href="https://dfens.ai/privacy">dfens.ai/privacy</a>.</p>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>
