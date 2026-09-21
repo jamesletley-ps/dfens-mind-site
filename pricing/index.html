@@ -72,7 +72,7 @@
         <li>Federated OIDC sign-in</li>
         <li>At the cap, calls are refused — never silently dropped</li>
       </ul>
-      <a class="btn ghost tier-cta" href="/contact/">Request free access</a>
+      <a class="btn ghost tier-cta" href="/contact/">Start free</a>
     </div>
 
     <div class="tier tier-featured">
@@ -86,7 +86,7 @@
         <li>Usage billed, not hard-capped</li>
         <li><code>owner</code> / <code>admin</code> / <code>member</code> roles, restricted contexts</li>
       </ul>
-      <a class="btn tier-cta" href="/contact/">Request Team access</a>
+      <a class="btn tier-cta" href="/contact/">Start on Team</a>
     </div>
 
     <div class="tier">
@@ -128,7 +128,7 @@
     <div class="kicker"><span class="k-n">02</span><span class="k-r"></span>Pricing FAQ</div>
     <h2>What people usually ask before signing up.</h2>
     <div class="faq">
-      <div class="qa"><h3>How do I actually sign up?</h3><p>Integrated AI is early: there's no self-serve web portal yet. Get in touch and we'll create your organization directly — usually within a business day.</p></div>
+      <div class="qa"><h3>How do I actually sign up?</h3><p>Integrated AI is early: self-serve signup is on the way, and the API it's built on already works today — see <a href="/developers/#setup">developers</a>. Until the web flow ships, get in touch and we'll create your organization directly — usually within a business day.</p></div>
       <div class="qa"><h3>What counts against the Individual cap?</h3><p>Thoughts saved (<code>capture_thought</code>/<code>update_thought</code>), embedding calls (search and capture both call the embedding model), and total stored content size. All three reset monthly.</p></div>
       <div class="qa"><h3>Can we move from Individual to Team later?</h3><p>Yes. Your context ids, org id, and every thought already captured stay exactly as they are — moving tiers changes billing and caps, not the data.</p></div>
       <div class="qa"><h3>How does billing work?</h3><p>Team and Enterprise are billed per seat, per month, through our billing partner Odoo — the same billing infrastructure DFENS AI Ltd already runs for <a href="https://dfens.ai">dfens.ai</a>. We never handle card data directly.</p></div>
@@ -141,33 +141,15 @@
 <section id="access">
   <div class="wrap" data-reveal>
     <div class="access">
-      <div class="kicker">Sign up via MCP</div>
-      <h2>Start on Individual free — right from the terminal.</h2>
-      <p class="sub">No web signup form. Two HTTP calls create and verify your org on
-      the free plan; upgrading to Team or Enterprise from there is a real MCP tool
-      call, not a separate checkout page.</p>
-
-      <div style="text-align:left; max-width:560px; margin:32px auto 0;">
-        <div class="term">
-          <div class="term-bar"><span></span><span></span><span></span><span class="t">bootstrap — plain HTTP, not MCP</span></div>
-          <pre><span class="c">// creates + verifies your org, returns a live api_key</span>
-<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations \
-  -d <span class="g">'{"name":"Acme Inc","contact_email":"you@acme.com"}'</span>
-<span class="c">// → check your email for a code, then POST it to .../verify</span></pre>
-        </div>
-        <p style="margin-top:20px;">Full walkthrough, including the MCP client config
-        and the <code>start_checkout</code> tool call that upgrades your plan, is on
-        the <a href="/#access">homepage</a>.</p>
-        <div class="note-box warn" style="margin-top:20px;">
-          <span class="nb-label">Placeholder hostname</span>
-          <p><code>mcp.integratedai.co.uk</code> isn't provisioned yet — this page
-          ships ahead of the live server. Use the contact path below in the
-          meantime.</p>
-        </div>
-      </div>
+      <div class="kicker">Get started</div>
+      <h2>Start on Individual free.</h2>
+      <p class="sub">Self-serve signup is on the way. The API it's built on already
+      works today — see the bootstrap walkthrough on
+      <a href="/developers/#setup">developers</a> — but until the web flow ships,
+      tell us and we'll set your org up directly, usually within a business day.</p>
 
       <div class="cta-row">
-        <a class="btn" href="/contact/">Tell us about your team</a>
+        <a class="btn" href="/contact/">Start free</a>
         <a class="btn ghost" href="mailto:hello@integratedai.co.uk?subject=Integrated%20AI%20pricing%20enquiry">Prefer email? Write to us</a>
       </div>
       <p class="fine">hello@integratedai.co.uk</p>

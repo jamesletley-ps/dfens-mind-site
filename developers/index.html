@@ -95,10 +95,27 @@
     returns "forbidden" until an org owner or admin adds you as a member — see
     <a href="#orgs">orgs &amp; roles</a>.</p>
     <p>Don't have an organization yet? OIDC sign-in above is for joining one that
-    already exists. To create your own, see <a href="/#access">signing up via
-    MCP</a> — a couple of plain HTTP calls (not MCP tool calls, since there's no
-    credential yet) get you a live <code>api_key</code> to put in the config
-    above.</p>
+    already exists. To create your own, two plain HTTP calls (not MCP tool
+    calls — there's no credential yet) get you a live <code>api_key</code> to put
+    in the config above:</p>
+
+    <div class="term">
+      <div class="term-bar"><span></span><span></span><span></span><span class="t">bootstrap — plain HTTP, not MCP</span></div>
+      <pre><span class="c">// 1. Create your organization (free Individual plan by default)</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations \
+  -d <span class="g">'{"name":"Acme Inc","contact_email":"you@acme.com"}'</span>
+<span class="c">// → {"org_id": "…", "status": "pending_verification"}</span>
+
+<span class="c">// 2. Check your email for a code, then verify</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations/&lt;org_id&gt;/verify \
+  -d <span class="g">'{"code":"123456"}'</span>
+<span class="c">// → {"status": "active", "plan_id": "individual", "api_key": "sk_live_…"}</span></pre>
+    </div>
+
+    <p>Put that <code>api_key</code> into the config above as a bearer token, and
+    you're live. Ready for a team? <code>start_checkout(org_id, plan_id)</code> is
+    a real MCP tool call once you're signed in — it returns a hosted Odoo checkout
+    link, and card details never touch us directly.</p>
 
     <h2 id="auth">Authentication</h2>
     <p>Sign-in federates through one or more standards-compliant OIDC providers —
@@ -160,10 +177,11 @@
     context-creation ability by being flagged a <em>poweruser</em>. An org always
     keeps at least one owner.</p>
     <div class="note-box">
-      <span class="nb-label">No self-serve portal yet</span>
-      <p>There's no public web UI to create an organization today. We set yours up
-      directly when you <a href="/contact/">get in touch</a> — see <a href="/pricing/">pricing</a>
-      for what each tier includes.</p>
+      <span class="nb-label">Self-serve portal on the way</span>
+      <p>There's no public web UI to create an organization yet — see the HTTP
+      bootstrap above in the meantime, or <a href="/contact/">get in touch</a> and
+      we'll set yours up directly. See <a href="/pricing/">pricing</a> for what
+      each tier includes.</p>
     </div>
 
     <h2 id="skills">Skills</h2>
@@ -177,9 +195,9 @@
     <p>Works identically from a signed-in human session or an org API key, so
     an unattended harness can pull a skill on its own — no human needs to be
     signed in. Minting <em>additional</em> named-service API keys for more
-    harnesses is still CLI-only on our side today, not an MCP tool or a
-    self-serve web action — get in touch if you need more than the one key
-    <a href="/#access">signing up via MCP</a> gives you.</p>
+    harnesses is still CLI-only on our side today, not a self-serve web
+    action — get in touch if you need more than the one key the signup
+    bootstrap above gives you.</p>
 
     <h2 id="residency">Data residency</h2>
     <p>Set per organization at creation, and fixed after that:</p>
@@ -201,8 +219,8 @@
       <a class="doc-card" href="/contact/">
         <span class="dc-k">Talk to us</span>
         <h3>Set up your organization</h3>
-        <p>No self-serve portal yet — tell us about your team and we'll set your org
-        up directly.</p>
+        <p>Self-serve portal on the way — tell us about your team and we'll set
+        your org up directly in the meantime.</p>
       </a>
     </div>
   </div>

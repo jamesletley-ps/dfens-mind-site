@@ -69,3 +69,22 @@ in-page with a note box). Update it once a real deployment exists.
 this brand (or a decision to point at a shared deployment — not decided here).
 
 **Priority:** P0 — blocks anyone actually connecting a client.
+
+## Swap signup CTAs to the real portal once it ships
+
+**What:** 2026-09-21 — `index.html`, `pricing/index.html`,
+`developers/index.html`, and `contact/index.html` were reworded so
+"Start free" reads like `../dfensai-site`'s clean signup CTAs instead of
+leading with raw curl/MCP framing. The HTTP bootstrap walkthrough now lives
+on `/developers/#setup` as the canonical, honest "the API already works,
+the UI doesn't yet" story. Every signup CTA still points at `/contact/`
+underneath, since there's no web portal yet.
+
+A full customer portal (subscription management, API keys, usage, member
+& seat management) is now roadmapped in `dfens-mind` (see that repo's
+`TODOS.md`, entry added 2026-09-21) — this is a product follow-up, so the
+implementation lives there, not here, per this file's own header note.
+Once any phase of it ships (even just "create an org" as a real web form),
+swap this site's `/contact/`-pointing signup CTAs for real links to it.
+
+**Priority:** P2 — no committed timeline on the portal side yet.

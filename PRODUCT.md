@@ -27,9 +27,10 @@ instead of each session starting from zero.
 
 This repository is the marketing site, not the engine — the engine lives in
 the public `dfens-mind` repo. The site's job is to move a qualified visitor
-into contact or into self-serve signup via MCP (see Capabilities and
-Constraints — there's no web signup portal, but a real programmatic one
-does exist).
+into contact, or into self-serve signup once the web portal ships (see
+Capabilities and Constraints — there's no web signup portal yet, but a real
+programmatic bootstrap does exist, and a full customer portal is now
+roadmapped in `dfens-mind`).
 
 ## Positioning
 
@@ -162,9 +163,16 @@ skills tools) during this site's build, 2026-09-20.
 **Absences that future work must not fabricate:**
 
 - No customers, testimonials, or usage numbers — pre-revenue.
-- No self-serve **web** signup portal. A self-serve signup path does exist
-  (`onboarding.py`'s HTTP bootstrap, see above) — don't describe it as a
-  portal/UI, and don't describe it as an MCP tool call (it isn't one).
+- No self-serve **web** signup portal yet. A self-serve signup path does
+  exist (`onboarding.py`'s HTTP bootstrap, see above) — don't describe it
+  as a portal/UI, and don't describe it as an MCP tool call (it isn't one).
+  **Decision 2026-09-21:** a real customer portal (subscription
+  management, API keys, usage, member/seat management) is now roadmapped
+  at `dfens-mind/ui-portal/`, reusing dfens-mind's existing OAuth 2.1/OIDC
+  rather than a separate auth system — see that repo's `TODOS.md` for the
+  phased plan. Not built yet; site copy should stay in the "on the way,
+  here's the working API in the meantime" register until a phase actually
+  ships, not claim the portal exists.
 - No live deployment URL for `integratedai.co.uk` yet — `mcp.integratedai.co.uk`
   is a placeholder hostname, flagged as such everywhere it appears.
 - No confirmed Enterprise per-seat price.
