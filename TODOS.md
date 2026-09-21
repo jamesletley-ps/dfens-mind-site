@@ -59,9 +59,9 @@ is closer to launch.
 
 **Priority:** P2.
 
-## Provision the deployment hostname referenced in /developers/
+## Provision the deployment hostname referenced in /documentation/
 
-**What:** `developers/index.html`'s MCP client setup snippet uses
+**What:** `documentation/index.html`'s MCP client setup snippet uses
 `https://mcp.integratedai.co.uk/mcp` as a placeholder hostname (flagged
 in-page with a note box). Update it once a real deployment exists.
 
@@ -73,10 +73,10 @@ this brand (or a decision to point at a shared deployment — not decided here).
 ## Swap signup CTAs to the real portal once it ships
 
 **What:** 2026-09-21 — `index.html`, `pricing/index.html`,
-`developers/index.html`, and `contact/index.html` were reworded so
+`documentation/index.html`, and `contact/index.html` were reworded so
 "Start free" reads like `../dfensai-site`'s clean signup CTAs instead of
 leading with raw curl/MCP framing. The HTTP bootstrap walkthrough now lives
-on `/developers/#setup` as the canonical, honest "the API already works,
+on `/documentation/#setup` as the canonical, honest "the API already works,
 the UI doesn't yet" story. Every signup CTA still points at `/contact/`
 underneath, since there's no web portal yet.
 

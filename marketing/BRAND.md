@@ -53,7 +53,7 @@ Reused from DFENS, adapted to a memory/MCP product instead of a firewall:
   no self-serve *web* portal — a real self-serve signup path exists, but
   it's a couple of plain HTTP calls (`onboarding.py`), never an MCP tool
   call and never a web UI — say exactly that, don't blur the two.
-- **Engineer-to-engineer** on `/developers/`; a little more outcome-first on
+- **Engineer-to-engineer** on `/documentation/`; a little more outcome-first on
   the landing page, matching DFENS's own audience split.
 - Avoid: "revolutionary", "AI-powered" as a selling point, unquantified
   absolutes ("never lose context"), and inventing specifics for entitlements

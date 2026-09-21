@@ -32,7 +32,7 @@ jobs:
         run: |
           rm -rf dist && mkdir -p dist
           cp index.html 404.html dist/
-          cp -r pricing developers contact assets dist/
+          cp -r pricing documentation developers contact assets dist/
           echo "Published files:"; find dist -type f | sort
           # Guard: nothing from marketing/ or docs/ must ever reach dist.
           if find dist -path '*/marketing/*' -o -name '*.md' | grep -q .; then

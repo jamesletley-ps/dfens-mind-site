@@ -489,13 +489,13 @@ footer .legal {
 }
 
 /* ============================================================
-   Developer documentation (/developers/*)
+   Documentation (/documentation/*)
    ============================================================ */
 .docs {
   display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 56px;
   max-width: var(--max); margin: 0 auto; padding: 56px 40px 96px; align-items: start;
 }
-.docs-nav { position: sticky; top: 92px; font-size: 14.5px; }
+.docs-nav { display: block; position: sticky; top: 92px; font-size: 14.5px; }
 .docs-nav .docs-nav-h { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); margin: 22px 0 12px; }
 .docs-nav .docs-nav-h:first-child { margin-top: 0; }
 .docs-nav ul { list-style: none; display: grid; gap: 3px; }

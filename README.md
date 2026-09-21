@@ -16,7 +16,7 @@ The user intends to refine branding with Claude Code closer to launch — see
 index.html             Landing page — hero, the problem, how it works,
                         capabilities, tool table, works-with, security, pricing teaser
 pricing/index.html      Pricing page (Individual / Team / Enterprise + FAQ)
-developers/index.html   MCP client setup, auth, full tool reference, context/org model
+documentation/index.html MCP client setup, auth, full tool reference, context/org model
 contact/index.html      Contact — Odoo form, plus the self-serve-via-MCP path
 404.html                Not-found page
 PRODUCT.md              Durable product record (users, positioning, evidence on hand)
@@ -111,4 +111,4 @@ mailbox itself is provisioned is tracked in `TODOS.md`.
 See `TODOS.md` for the full list: confirming the `hello@` mailbox, the
 dfensai-site reciprocal link, a trademark check on "Integrated AI", final
 mark/logo design, and the placeholder deployment hostname in
-`developers/index.html`.
+`documentation/index.html`.

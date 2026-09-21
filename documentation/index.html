@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation — Integrated AI</title>
+<meta name="description" content="Connect an MCP client to Integrated AI: setup, authentication, the full tool reference, the context/org model, and data residency.">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><line x1='50' y1='54' x2='50' y2='18' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='22' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='78' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><circle cx='50' cy='18' r='10' fill='%2322c55e'/><circle cx='22' cy='68' r='10' fill='%2322c55e'/><circle cx='78' cy='68' r='10' fill='%2322c55e'/><circle cx='50' cy='54' r='16' fill='%2308090B' stroke='%2322c55e' stroke-width='5'/></svg>">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="/">
+        <svg class="mark-svg" viewBox="12 8 76 70" width="22" height="20" aria-hidden="true"><line x1="50" y1="54" x2="50" y2="18" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="22" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="78" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><circle cx="50" cy="18" r="7" fill="#22c55e"></circle><circle cx="22" cy="68" r="7" fill="#22c55e"></circle><circle cx="78" cy="68" r="7" fill="#22c55e"></circle><circle cx="50" cy="54" r="13" fill="#08090B" stroke="#22c55e" stroke-width="3.5"></circle></svg>
+        <span>Integrated AI<span class="co"> · by DFENS AI</span></span>
+      </a>
+      <ul>
+        <li class="hide-m"><a href="/#how">How it works</a></li>
+        <li class="hide-m"><a href="/#capabilities">Capabilities</a></li>
+        <li class="hide-m"><a href="/documentation/" aria-current="page">Documentation</a></li>
+        <li class="hide-m"><a href="/pricing/">Pricing</a></li>
+        <li>
+          <details class="nav-more">
+            <summary>Menu</summary>
+            <div class="nav-more-panel">
+              <a href="/#how">How it works</a>
+              <a href="/#capabilities">Capabilities</a>
+              <a href="/#security">Security</a>
+              <a href="/documentation/" aria-current="page">Documentation</a>
+              <a href="/pricing/">Pricing</a>
+              <a href="/contact/">Contact</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="btn" href="/contact/"><span class="cta-full">Talk to us</span><span class="cta-short">Talk</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="docs">
+  <nav class="docs-nav" aria-label="Documentation">
+    <p class="docs-nav-h">Start here</p>
+    <ul>
+      <li><a href="#setup">Connect a client</a></li>
+      <li><a href="#auth">Authentication</a></li>
+    </ul>
+    <p class="docs-nav-h">Reference</p>
+    <ul>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#contexts">Context model</a></li>
+      <li><a href="#orgs">Orgs &amp; roles</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#residency">Data residency</a></li>
+    </ul>
+  </nav>
+
+  <div class="docs-main">
+    <div class="kicker">Documentation</div>
+    <h1>Connect once. Every session shares the same memory.</h1>
+    <p class="lede">Integrated AI is a remote <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a> server.
+    Any MCP-speaking client works the same way: point it at the server, sign in
+    once through your identity provider, and every tool call after that is
+    scoped to your org.</p>
+
+    <h2 id="setup">Connect a client</h2>
+    <p>Add it to your MCP client's server config. In Claude Code, that's
+    <code>~/.claude.json</code> (or a project-level config) under
+    <code>mcpServers</code>:</p>
+    <div class="term">
+      <div class="term-bar"><span></span><span></span><span></span><span class="t">~/.claude.json</span></div>
+      <pre>{
+  <span class="g">"mcpServers"</span>: {
+    <span class="g">"integrated-ai"</span>: {
+      <span class="g">"type"</span>: <span class="g">"http"</span>,
+      <span class="g">"url"</span>: <span class="g">"https://mcp.integratedai.co.uk/mcp"</span>
+    }
+  }
+}</pre>
+    </div>
+    <div class="note-box warn">
+      <span class="nb-label">Placeholder URL</span>
+      <p>The deployment hostname above (<code>mcp.integratedai.co.uk</code>) isn't
+      provisioned yet — this page ships ahead of the live server. Use the real URL
+      we send you when your organization is set up.</p>
+    </div>
+    <p>The first connection pops a browser for sign-in through your organization's
+    identity provider and auto-creates your user record. Every tool call still
+    returns "forbidden" until an org owner or admin adds you as a member — see
+    <a href="#orgs">orgs &amp; roles</a>.</p>
+    <p>Don't have an organization yet? OIDC sign-in above is for joining one that
+    already exists. To create your own, two plain HTTP calls (not MCP tool
+    calls — there's no credential yet) get you a live <code>api_key</code> to put
+    in the config above:</p>
+
+    <div class="term">
+      <div class="term-bar"><span></span><span></span><span></span><span class="t">bootstrap — plain HTTP, not MCP</span></div>
+      <pre><span class="c">// 1. Create your organization (free Individual plan by default)</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations \
+  -d <span class="g">'{"name":"Acme Inc","contact_email":"you@acme.com"}'</span>
+<span class="c">// → {"org_id": "…", "status": "pending_verification"}</span>
+
+<span class="c">// 2. Check your email for a code, then verify</span>
+<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations/&lt;org_id&gt;/verify \
+  -d <span class="g">'{"code":"123456"}'</span>
+<span class="c">// → {"status": "active", "plan_id": "individual", "api_key": "sk_live_…"}</span></pre>
+    </div>
+
+    <p>Put that <code>api_key</code> into the config above as a bearer token, and
+    you're live. Ready for a team? <code>start_checkout(org_id, plan_id)</code> is
+    a real MCP tool call once you're signed in — it returns a hosted Odoo checkout
+    link, and card details never touch us directly.</p>
+
+    <h2 id="auth">Authentication</h2>
+    <p>Sign-in federates through one or more standards-compliant OIDC providers —
+    Google, Okta, Microsoft Entra, or a self-hosted identity provider — configured
+    per deployment. With exactly one provider configured, sign-in goes straight to
+    it; with more than one, a picker shows first.</p>
+    <p>Behind that federated login, Integrated AI runs its own minimal OAuth 2.1
+    authorization server, so MCP clients get standard dynamic client registration
+    and an authorization-code + PKCE flow. It mints its own RS256-signed JWTs as
+    the access/refresh tokens your client actually uses — your identity
+    provider's tokens never leave the login exchange.</p>
+
+    <h2 id="tools">Tools</h2>
+    <p>Every tool below is a plain MCP tool call. Every one except
+    <code>list_contexts</code> requires a <code>context</code> id — there's no
+    default, and passing the wrong one silently returns empty results rather
+    than an error, so always resolve it from <code>list_contexts()</code> first.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>list_contexts()</code></td><td>Every context the caller can access, as <code>{id, name, description}</code>.</td></tr>
+          <tr><td><code>create_context(org_id, name, description, instructions?)</code></td><td>Create a new context, org-visible by default.</td></tr>
+          <tr><td><code>capture_thought(context, content, topics?, people?)</code></td><td>Save a new thought.</td></tr>
+          <tr><td><code>search_thoughts(context, query, limit?)</code></td><td>Semantic search within a context.</td></tr>
+          <tr><td><code>browse_recent(context, limit?, topic?)</code></td><td>List recent thoughts, optionally filtered by topic.</td></tr>
+          <tr><td><code>view_stats(context)</code></td><td>Total count, top topics, and most recent thought.</td></tr>
+          <tr><td><code>update_thought(context, id, content?, topics?, people?)</code></td><td>Revise an existing thought.</td></tr>
+          <tr><td><code>delete_thought(context, id)</code></td><td>Remove a thought.</td></tr>
+          <tr><td><code>create_skill</code> / <code>get_skill</code> / <code>list_skills</code> / <code>update_skill</code> / <code>delete_skill</code></td><td>Versioned, shared working-practice documents scoped to a context. See <a href="#skills">Skills</a>.</td></tr>
+          <tr><td><code>list_skill_files</code> / <code>get_skill_file</code></td><td>Files bundled alongside a skill, beyond its plain-text instructions.</td></tr>
+          <tr><td><code>invite_member(org_id, email, role?)</code></td><td>Add a teammate by email — they get access on their next sign-in, no separate accept step. Owner/admin only.</td></tr>
+          <tr><td><code>admin_create_api_key(org_id, name, user_email?)</code></td><td>Issue an org API key for an unattended harness. The raw key is returned once, on creation. Owner/admin only.</td></tr>
+          <tr><td><code>admin_list_api_keys(org_id)</code> / <code>admin_revoke_api_key(org_id, key_id)</code></td><td>List or revoke org API keys (metadata only — the raw key is never shown again). Owner/admin only.</td></tr>
+          <tr><td><code>subscription_status(org_id)</code></td><td>Current plan, usage (thought count, storage), and billing state.</td></tr>
+          <tr><td><code>start_checkout(org_id, plan_id)</code></td><td>Start a hosted checkout to move the org onto a paid plan. Owner/admin only.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Org-admin tools (<code>admin_list_org_members</code>, <code>admin_add_org_member</code>,
+    <code>admin_create_api_key</code>, <code>admin_create_context</code>,
+    <code>admin_grant_context</code>, and similar) sit behind an <code>owner</code>/<code>admin</code>
+    role check — any authenticated user can see them listed, but calling one without the
+    role returns a permission error.</p>
+
+    <h2 id="contexts">Context model</h2>
+    <p>Every thought lives inside a <code>context</code>: an opaque id belonging to
+    exactly one organization, with one of two visibilities.</p>
+    <ul>
+      <li><strong>org</strong> (the default) — every member of the org has access, no
+      separate grant needed.</li>
+      <li><strong>restricted</strong> — only members holding an explicit grant can
+      access it. Every user also gets one automatic <strong>personal</strong>
+      context on joining an org: always restricted, always private to them, and
+      unlike any other restricted context, it can never be shared.</li>
+    </ul>
+    <p>A context also carries a human-readable <code>name</code> and
+    <code>description</code> — not necessarily unique — that a caller uses to pick
+    the right id from a <code>list_contexts()</code> result.</p>
+
+    <h2 id="orgs">Orgs &amp; roles</h2>
+    <p>Roles are <code>owner</code>, <code>admin</code>, and <code>member</code>. Every role
+    gets access to every org-visibility context, plus any restricted one they
+    hold a grant on. <code>owner</code>/<code>admin</code> additionally manage
+    membership, create and edit contexts, and grant or revoke access to
+    restricted ones. A plain <code>member</code> gets the same self-serve
+    context-creation ability by being flagged a <em>poweruser</em>. An org always
+    keeps at least one owner.</p>
+    <div class="note-box">
+      <span class="nb-label">Self-serve portal on the way</span>
+      <p>There's no public web UI to create an organization yet — see the HTTP
+      bootstrap above in the meantime, or <a href="/contact/">get in touch</a> and
+      we'll set yours up directly. See <a href="/pricing/">pricing</a> for what
+      each tier includes.</p>
+    </div>
+
+    <h2 id="skills">Skills</h2>
+    <p>One canonical, org-owned skill every AI tool your team runs can pull —
+    Claude, or any other MCP-speaking harness — instead of every tool keeping
+    its own drifting copy. Versioned skill storage
+    (<code>create_skill</code>/<code>get_skill</code>/<code>list_skills</code>/
+    <code>update_skill</code>/<code>delete_skill</code>), scoped to a context,
+    with optional bundled files beyond plain-text instructions
+    (<code>list_skill_files</code>/<code>get_skill_file</code>).</p>
+    <p>Works identically from a signed-in human session or an org API key, so
+    an unattended harness can pull a skill on its own — no human needs to be
+    signed in. Minting <em>additional</em> named-service API keys for more
+    harnesses is still CLI-only on our side today, not a self-serve web
+    action — get in touch if you need more than the one key the signup
+    bootstrap above gives you.</p>
+
+    <h2 id="residency">Data residency</h2>
+    <p>Set per organization at creation, and fixed after that:</p>
+    <ul>
+      <li><code>europe-west1</code></li>
+      <li><code>us-central1</code></li>
+      <li><code>asia-northeast1</code></li>
+    </ul>
+    <p>Each is a genuinely separate deployment, not a latency fan-out — the same
+    three regions our sibling product at <a href="https://dfens.ai">dfens.ai</a> uses.</p>
+
+    <div class="doc-cards" style="margin-top:64px;">
+      <a class="doc-card" href="https://github.com/jamesletley-ps/dfens-mind" target="_blank" rel="noopener">
+        <span class="dc-k">Source</span>
+        <h3>dfens-mind on GitHub</h3>
+        <p>The MCP server itself — FastMCP, Postgres + pgvector, the OAuth 2.1
+        authorization server, and the full README.</p>
+      </a>
+      <a class="doc-card" href="/contact/">
+        <span class="dc-k">Talk to us</span>
+        <h3>Set up your organization</h3>
+        <p>Self-serve portal on the way — tell us about your team and we'll set
+        your org up directly in the meantime.</p>
+      </a>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="/">
+          <svg class="mark-svg" viewBox="12 8 76 70" width="21" height="19" aria-hidden="true"><line x1="50" y1="54" x2="50" y2="18" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="22" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><line x1="50" y1="54" x2="78" y2="68" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round"></line><circle cx="50" cy="18" r="7" fill="#22c55e"></circle><circle cx="22" cy="68" r="7" fill="#22c55e"></circle><circle cx="78" cy="68" r="7" fill="#22c55e"></circle><circle cx="50" cy="54" r="13" fill="#08090B" stroke="#22c55e" stroke-width="3.5"></circle></svg>
+          <span>Integrated AI</span>
+        </a>
+        <p style="margin-top:12px; max-width:340px; color:var(--text-dim);">Shared, semantically searchable memory for every AI tool your team uses. By
+        DFENS AI Ltd — makers of <a href="https://dfens.ai">DFENS</a>, self-hosted AI
+        Assurance for LLM traffic.</p>
+      </div>
+      <div class="cols">
+        <div>
+          <p class="foot-h">Product</p>
+          <ul>
+            <li><a href="/#how">How it works</a></li>
+            <li><a href="/#capabilities">Capabilities</a></li>
+            <li><a href="/documentation/" aria-current="page">Documentation</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="foot-h">Company</p>
+          <ul>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="https://dfens.ai">dfens.ai</a></li>
+            <li><a href="https://dfens.ai/privacy">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="legal">&copy; 2026 DFENS AI Ltd. Integrated AI is a DFENS AI Ltd product. Privacy and legal notices are published at <a href="https://dfens.ai/privacy">dfens.ai/privacy</a>.</p>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>
