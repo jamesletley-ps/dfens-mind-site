@@ -79,7 +79,7 @@
   <span class="g">"mcpServers"</span>: {
     <span class="g">"integrated-ai"</span>: {
       <span class="g">"type"</span>: <span class="g">"http"</span>,
-      <span class="g">"url"</span>: <span class="g">"https://mcp.integratedai.co.uk/mcp"</span>
+      <span class="g">"url"</span>: <span class="g">"https://mind-api.dfens.ai/mcp"</span>
     }
   }
 }</pre>
@@ -96,12 +96,12 @@
     <div class="term">
       <div class="term-bar"><span></span><span></span><span></span><span class="t">bootstrap — plain HTTP, not MCP</span></div>
       <pre><span class="c">// 1. Create your organization (free Individual plan by default)</span>
-<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations \
+<span class="k">curl</span> https://mind-api.dfens.ai/v1/organizations \
   -d <span class="g">'{"name":"Acme Inc","contact_email":"you@acme.com"}'</span>
 <span class="c">// → {"org_id": "…", "status": "pending_verification"}</span>
 
 <span class="c">// 2. Check your email for a code, then verify</span>
-<span class="k">curl</span> https://mcp.integratedai.co.uk/v1/organizations/&lt;org_id&gt;/verify \
+<span class="k">curl</span> https://mind-api.dfens.ai/v1/organizations/&lt;org_id&gt;/verify \
   -d <span class="g">'{"code":"123456"}'</span>
 <span class="c">// → {"status": "active", "plan_id": "individual", "api_key": "sk_live_…"}</span></pre>
     </div>

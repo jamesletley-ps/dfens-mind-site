@@ -54,8 +54,9 @@ real org/role/grant model underneath it — not a flat notes file per repo.
   `check-html.py`) runs on every push; `amplify.yml` is a sane default build
   spec, not a confirmed hosting decision (see TODOS.md).
 - **Domain:** `integratedai.co.uk` — live on AWS Amplify as of 2026-09-20 (see
-  `deploy/terraform/`). The separate `mcp.integratedai.co.uk` deployment
-  hostname (for the actual `dfens-mind` server) is still a placeholder.
+  `deploy/terraform/`). The actual `dfens-mind` MCP server is hosted
+  separately, under the shared `dfens.ai` deployment, at
+  `https://mind-api.dfens.ai` — live as of 2026-09-21.
 - **Company:** DFENS AI Ltd — same legal entity as dfens.ai.
 
 ## Capabilities and Constraints
@@ -141,8 +142,6 @@ defaults):
   everything past that sentence is still undecided.
 - Public availability / GA date — the product has no live paying customer yet
   (`dfens-mind/TODOS.md`).
-- The actual `dfens-mind` deployment behind `mcp.integratedai.co.uk` — not
-  provisioned yet (the site's own hosting at `integratedai.co.uk` is live).
 - Trademark clearance on "Integrated AI".
 - Final mark/logo — the connected-node placeholder mark is explicitly interim.
 
@@ -173,8 +172,6 @@ skills tools) during this site's build, 2026-09-20.
   phased plan. Not built yet; site copy should stay in the "on the way,
   here's the working API in the meantime" register until a phase actually
   ships, not claim the portal exists.
-- No live deployment URL for `integratedai.co.uk` yet — `mcp.integratedai.co.uk`
-  is a placeholder hostname, flagged as such everywhere it appears.
 - No confirmed Enterprise per-seat price.
 - `background_scanners`'s exact mechanism (sources, triggers, scan
   behavior) — the one-line functional description is a deliberate,

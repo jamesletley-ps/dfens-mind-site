@@ -109,6 +109,7 @@ mailbox itself is provisioned is tracked in `TODOS.md`.
 ## Before public launch (TODOs left in the files)
 
 See `TODOS.md` for the full list: confirming the `hello@` mailbox, the
-dfensai-site reciprocal link, a trademark check on "Integrated AI", final
-mark/logo design, and the placeholder deployment hostname in
-`documentation/index.html`.
+dfensai-site reciprocal link, a trademark check on "Integrated AI", and
+final mark/logo design. The `documentation/index.html` deployment hostname
+is no longer a placeholder — it points at the live production MCP endpoint,
+`https://mind-api.dfens.ai`.

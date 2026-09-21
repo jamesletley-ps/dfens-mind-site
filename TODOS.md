@@ -59,16 +59,12 @@ is closer to launch.
 
 **Priority:** P2.
 
-## Provision the deployment hostname referenced in /documentation/
+## ~~Provision the deployment hostname referenced in /documentation/~~ — done 2026-09-21
 
-**What:** `documentation/index.html`'s MCP client setup snippet uses
-`https://mcp.integratedai.co.uk/mcp` as a placeholder hostname (flagged
-in-page with a note box). Update it once a real deployment exists.
-
-**Depends on:** DNS/hosting above, plus an actual `dfens-mind` deployment for
-this brand (or a decision to point at a shared deployment — not decided here).
-
-**Priority:** P0 — blocks anyone actually connecting a client.
+`documentation/index.html`'s MCP client setup snippet now points at the real
+production endpoint, `https://mind-api.dfens.ai` (not the
+`integratedai.co.uk` domain — the MCP service is hosted under the shared
+`dfens.ai` deployment). The in-page placeholder note box was removed.
 
 ## Swap signup CTAs to the real portal once it ships
 
