@@ -84,12 +84,6 @@
   }
 }</pre>
     </div>
-    <div class="note-box warn">
-      <span class="nb-label">Placeholder URL</span>
-      <p>The deployment hostname above (<code>mcp.integratedai.co.uk</code>) isn't
-      provisioned yet — this page ships ahead of the live server. Use the real URL
-      we send you when your organization is set up.</p>
-    </div>
     <p>The first connection pops a browser for sign-in through your organization's
     identity provider and auto-creates your user record. Every tool call still
     returns "forbidden" until an org owner or admin adds you as a member — see
@@ -127,6 +121,18 @@
     and an authorization-code + PKCE flow. It mints its own RS256-signed JWTs as
     the access/refresh tokens your client actually uses — your identity
     provider's tokens never leave the login exchange.</p>
+    <div class="note-box">
+      <span class="nb-label">Enterprise-only</span>
+      <p>Bringing your own identity provider (<code>custom_oauth</code>) — a
+      dedicated Okta, Entra, or self-hosted OIDC client for your org, rather
+      than signing in through our shared provider — is an Enterprise
+      entitlement, along with configurable retention &amp; archival
+      (<code>retention_archive</code>) and background scanners that
+      auto-capture context from your team's other tools
+      (<code>background_scanners</code>). Individual and Team don't include
+      these; sign-in itself works the same on every tier. See
+      <a href="/pricing/">pricing</a> for the full breakdown.</p>
+    </div>
 
     <h2 id="tools">Tools</h2>
     <p>Every tool below is a plain MCP tool call. Every one except
