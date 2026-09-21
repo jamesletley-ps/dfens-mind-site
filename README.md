@@ -112,4 +112,4 @@ See `TODOS.md` for the full list: confirming the `hello@` mailbox, the
 dfensai-site reciprocal link, a trademark check on "Integrated AI", and
 final mark/logo design. The `documentation/index.html` deployment hostname
 is no longer a placeholder — it points at the live production MCP endpoint,
-`https://mind-api.dfens.ai`.
+`https://mind-api.dfens.ai/mcp`.

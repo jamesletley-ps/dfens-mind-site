@@ -62,7 +62,7 @@ is closer to launch.
 ## ~~Provision the deployment hostname referenced in /documentation/~~ — done 2026-09-21
 
 `documentation/index.html`'s MCP client setup snippet now points at the real
-production endpoint, `https://mind-api.dfens.ai` (not the
+production endpoint, `https://mind-api.dfens.ai/mcp` (not the
 `integratedai.co.uk` domain — the MCP service is hosted under the shared
 `dfens.ai` deployment). The in-page placeholder note box was removed.
 

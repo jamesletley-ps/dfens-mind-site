@@ -56,7 +56,7 @@ real org/role/grant model underneath it — not a flat notes file per repo.
 - **Domain:** `integratedai.co.uk` — live on AWS Amplify as of 2026-09-20 (see
   `deploy/terraform/`). The actual `dfens-mind` MCP server is hosted
   separately, under the shared `dfens.ai` deployment, at
-  `https://mind-api.dfens.ai` — live as of 2026-09-21.
+  `https://mind-api.dfens.ai/mcp` — live as of 2026-09-21.
 - **Company:** DFENS AI Ltd — same legal entity as dfens.ai.
 
 ## Capabilities and Constraints
