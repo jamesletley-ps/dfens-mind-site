@@ -213,6 +213,50 @@
     action — get in touch if you need more than the one key the signup
     bootstrap above gives you.</p>
 
+    <h3>Making a skill runnable, not just stored</h3>
+    <p>The tools above are storage — pulling a skill into a session is still
+    up to your harness. Most MCP clients, Claude Code included, only
+    discover skills from <code>SKILL.md</code> files scanned off local disk
+    once at session start; none of them know about a remote skill store on
+    their own. Bridge that once and every skill your team keeps in DFENS
+    Mind becomes runnable without a matching local file — no per-skill
+    setup, and no redeploy when someone edits one.</p>
+    <p><strong>Manually</strong> — save a small permanent loader as a local
+    skill. In Claude Code that's a file at
+    <code>~/.claude/skills/dfens-mind-skills/SKILL.md</code>; other harnesses
+    that support local skills use an equivalent path.</p>
+    <div class="term">
+      <div class="term-bar"><span></span><span></span><span></span><span class="t">~/.claude/skills/dfens-mind-skills/SKILL.md</span></div>
+      <pre><span class="c">---</span>
+<span class="k">name</span>: dfens-mind-skills
+<span class="k">description</span>: Resolves and runs skills stored in the DFENS Mind MCP
+  knowledge base. Use whenever a requested skill isn't available locally.
+<span class="c">---</span>
+
+1. Call <span class="g">list_contexts</span>, then <span class="g">list_skills</span> on every context returned —
+   merge the results into one registry keyed by skill name.
+2. Match the request against each result's <span class="g">description</span> field, the
+   same way a local SKILL.md's frontmatter description is matched.
+3. Once matched, treat its <span class="g">instructions</span> field as that skill's full
+   body and follow it exactly. If <span class="g">has_files</span> is true, fetch each one
+   first with <span class="g">list_skill_files</span> / <span class="g">get_skill_file</span>.</pre>
+    </div>
+    <p><strong>Via global instructions</strong> — for a harness with no local-skill
+    mechanism, or to make the check automatic rather than needing the loader
+    invoked by name, add the same rule to your harness's persistent global
+    config instead (Claude Code's <code>~/.claude/CLAUDE.md</code>, or
+    whatever plays that role for your client):</p>
+    <div class="term">
+      <div class="term-bar"><span></span><span></span><span></span><span class="t">~/.claude/CLAUDE.md</span></div>
+      <pre>If a requested skill isn't found locally, check DFENS Mind before
+assuming it doesn't exist: call <span class="g">list_contexts</span>, then <span class="g">list_skills</span> on
+each context, and match the request against every result's
+<span class="g">description</span> field. Follow the matched skill's <span class="g">instructions</span> field
+as its full body, in place of these instructions.</pre>
+    </div>
+    <p>Either way, this is a one-time setup per harness install, not per
+    organization or session.</p>
+
     <h2 id="residency">Data residency</h2>
     <p>Set per organization at creation, and fixed after that:</p>
     <ul>
