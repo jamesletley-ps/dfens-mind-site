@@ -66,7 +66,7 @@ production endpoint, `https://mind-api.dfens.ai/mcp` (not the
 `integratedai.co.uk` domain — the MCP service is hosted under the shared
 `dfens.ai` deployment). The in-page placeholder note box was removed.
 
-## Swap signup CTAs to the real portal once it ships
+## ~~Swap signup CTAs to the real portal once it ships~~ — done 2026-09-22
 
 **What:** 2026-09-21 — `index.html`, `pricing/index.html`,
 `documentation/index.html`, and `contact/index.html` were reworded so
@@ -76,11 +76,21 @@ on `/documentation/#setup` as the canonical, honest "the API already works,
 the UI doesn't yet" story. Every signup CTA still points at `/contact/`
 underneath, since there's no web portal yet.
 
-A full customer portal (subscription management, API keys, usage, member
-& seat management) is now roadmapped in `dfens-mind` (see that repo's
-`TODOS.md`, entry added 2026-09-21) — this is a product follow-up, so the
-implementation lives there, not here, per this file's own header note.
-Once any phase of it ships (even just "create an org" as a real web form),
-swap this site's `/contact/`-pointing signup CTAs for real links to it.
+**2026-09-22:** the customer portal shipped to production
+(`dfens-mind/portal.py`, `https://mind-api.dfens.ai/portal/` — see that
+repo's `TODOS.md` "Customer Portal (MVP eng-reviewed 2026-09-21, built
+2026-09-21)" / "Buy additional seats" / "Contexts self-service +
+member-invite UI" entries). Every `/contact/`-pointing signup CTA on this
+site now points at the real portal, same pattern as `../dfensai-site`'s
+`portal.dfens.ai/signup?plan=…` links:
 
-**Priority:** P2 — no committed timeline on the portal side yet.
+- Individual ("Start free", nav + hero + pricing tier + docs):
+  `https://mind-api.dfens.ai/portal/onboarding` — the org-creation form.
+- Team ("Start on Team", pricing tier): `https://mind-api.dfens.ai/portal/?plan=team`
+  — the dashboard, `plan` query param pre-hints the upgrade panel
+  (`dashboard_handler`'s `plan_hint`); redirects through `/portal/login` for a
+  signed-out visitor and preserves the `next` path back to it.
+- Enterprise stays `/contact/` — deliberately not self-serve, same posture as
+  `../dfensai-site`'s Enterprise CTA (mailto, "Contact sales").
+
+`PRODUCT.md` updated to reflect the portal as live, not roadmapped.

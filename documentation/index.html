@@ -37,7 +37,7 @@
             </div>
           </details>
         </li>
-        <li><a class="btn" href="/contact/"><span class="cta-full">Talk to us</span><span class="cta-short">Talk</span></a></li>
+        <li><a class="btn" href="https://mind-api.dfens.ai/portal/onboarding"><span class="cta-full">Start free</span><span class="cta-short">Sign up</span></a></li>
       </ul>
     </nav>
   </div>
@@ -89,7 +89,11 @@
     returns "forbidden" until an org owner or admin adds you as a member — see
     <a href="#orgs">orgs &amp; roles</a>.</p>
     <p>Don't have an organization yet? OIDC sign-in above is for joining one that
-    already exists. To create your own, two plain HTTP calls (not MCP tool
+    already exists. The quickest way to create your own is the
+    <a href="https://mind-api.dfens.ai/portal/onboarding">customer portal</a> — sign
+    in, name your org, and you're through in minutes, with Team available as a
+    hosted Odoo checkout from the same dashboard. Automating the bootstrap
+    instead (CI, a provisioning script)? Two plain HTTP calls (not MCP tool
     calls — there's no credential yet) get you a live <code>api_key</code> to put
     in the config above:</p>
 
@@ -191,11 +195,12 @@
     context-creation ability by being flagged a <em>poweruser</em>. An org always
     keeps at least one owner.</p>
     <div class="note-box">
-      <span class="nb-label">Self-serve portal on the way</span>
-      <p>There's no public web UI to create an organization yet — see the HTTP
-      bootstrap above in the meantime, or <a href="/contact/">get in touch</a> and
-      we'll set yours up directly. See <a href="/pricing/">pricing</a> for what
-      each tier includes.</p>
+      <span class="nb-label">Self-serve portal</span>
+      <p>Create and manage an organization from the
+      <a href="https://mind-api.dfens.ai/portal/onboarding">customer portal</a> — org
+      creation, plan upgrades, API keys, and member/context management, no API
+      calls required. The HTTP bootstrap above still works, for automation. See
+      <a href="/pricing/">pricing</a> for what each tier includes.</p>
     </div>
 
     <h2 id="skills">Skills</h2>
@@ -274,11 +279,11 @@ as its full body, in place of these instructions.</pre>
         <p>The MCP server itself — FastMCP, Postgres + pgvector, the OAuth 2.1
         authorization server, and the full README.</p>
       </a>
-      <a class="doc-card" href="/contact/">
-        <span class="dc-k">Talk to us</span>
+      <a class="doc-card" href="https://mind-api.dfens.ai/portal/onboarding">
+        <span class="dc-k">Customer portal</span>
         <h3>Set up your organization</h3>
-        <p>Self-serve portal on the way — tell us about your team and we'll set
-        your org up directly in the meantime.</p>
+        <p>Sign in, create your org, and upgrade to Team through a hosted Odoo
+        checkout — self-serve, no card details handled by us.</p>
       </a>
     </div>
   </div>

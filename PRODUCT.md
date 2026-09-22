@@ -27,10 +27,9 @@ instead of each session starting from zero.
 
 This repository is the marketing site, not the engine — the engine lives in
 the public `dfens-mind` repo. The site's job is to move a qualified visitor
-into contact, or into self-serve signup once the web portal ships (see
-Capabilities and Constraints — there's no web signup portal yet, but a real
-programmatic bootstrap does exist, and a full customer portal is now
-roadmapped in `dfens-mind`).
+into self-serve signup (Individual, Team) through the live customer portal,
+or into contact for Enterprise (see Capabilities and Constraints — the web
+portal shipped to production 2026-09-22).
 
 ## Positioning
 
@@ -56,7 +55,9 @@ real org/role/grant model underneath it — not a flat notes file per repo.
 - **Domain:** `integratedai.co.uk` — live on AWS Amplify as of 2026-09-20 (see
   `deploy/terraform/`). The actual `dfens-mind` MCP server is hosted
   separately, under the shared `dfens.ai` deployment, at
-  `https://mind-api.dfens.ai/mcp` — live as of 2026-09-21.
+  `https://mind-api.dfens.ai/mcp` — live as of 2026-09-21. The customer
+  portal (org creation, plan upgrade/checkout, keys, members) is served
+  same-origin at `https://mind-api.dfens.ai/portal/` — live as of 2026-09-22.
 - **Company:** DFENS AI Ltd — same legal entity as dfens.ai.
 
 ## Capabilities and Constraints
@@ -99,6 +100,15 @@ real org/role/grant model underneath it — not a flat notes file per repo.
   real `@mcp.tool()` functions (not REST) — so upgrading from the free
   Individual plan to Team/Enterprise happens as an MCP tool call once an org
   exists, via a Odoo-hosted checkout link. Never handles card data directly.
+- **Customer portal — live 2026-09-22** (`dfens-mind/portal.py`, server-rendered
+  Starlette + Jinja2, same-origin at `https://mind-api.dfens.ai/portal/`, not a
+  separate SPA or subdomain): sign in via the existing OIDC/OAuth 2.1 stack,
+  create an organization (defaults to Individual, free, active immediately),
+  upgrade to Team via the same Odoo-hosted checkout `start_checkout` uses,
+  buy additional seats, mint/revoke API keys, invite/remove members
+  (seat-capped), and grant/revoke restricted-context access. This is now the
+  genuine self-serve signup path this site's CTAs point at — supersedes the
+  earlier "no web portal yet" framing below.
 - Billing: `start_checkout` → Go admin-service → Odoo-hosted checkout,
   reconciled hourly via a Cloud Run job. Same Odoo instance/pattern as sibling
   product ai-firewall. Inbound Odoo webhook path is deliberately not wired
@@ -162,16 +172,19 @@ skills tools) during this site's build, 2026-09-20.
 **Absences that future work must not fabricate:**
 
 - No customers, testimonials, or usage numbers — pre-revenue.
-- No self-serve **web** signup portal yet. A self-serve signup path does
-  exist (`onboarding.py`'s HTTP bootstrap, see above) — don't describe it
-  as a portal/UI, and don't describe it as an MCP tool call (it isn't one).
-  **Decision 2026-09-21:** a real customer portal (subscription
+- **Update 2026-09-22:** the self-serve **web** signup portal shipped and is
+  live in production at `https://mind-api.dfens.ai/portal/` (`dfens-mind/portal.py`
+  — see Capabilities, above). The 2026-09-21 roadmap note below is superseded;
+  site copy should now describe the portal as a real, live way to sign up and
+  upgrade, not "on the way." `onboarding.py`'s HTTP bootstrap still exists and
+  is still worth documenting for automation, but it's no longer the only
+  self-serve path.
+  ~~**Decision 2026-09-21:** a real customer portal (subscription
   management, API keys, usage, member/seat management) is now roadmapped
   at `dfens-mind/ui-portal/`, reusing dfens-mind's existing OAuth 2.1/OIDC
   rather than a separate auth system — see that repo's `TODOS.md` for the
-  phased plan. Not built yet; site copy should stay in the "on the way,
-  here's the working API in the meantime" register until a phase actually
-  ships, not claim the portal exists.
+  phased plan.~~ (Superseded: it shipped as `portal.py` in the existing
+  Python service, not a separate `ui-portal/` SPA.)
 - No confirmed Enterprise per-seat price.
 - `background_scanners`'s exact mechanism (sources, triggers, scan
   behavior) — the one-line functional description is a deliberate,
