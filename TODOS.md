@@ -94,3 +94,14 @@ site now points at the real portal, same pattern as `../dfensai-site`'s
   `../dfensai-site`'s Enterprise CTA (mailto, "Contact sales").
 
 `PRODUCT.md` updated to reflect the portal as live, not roadmapped.
+
+**2026-09-23:** Enterprise is per-seat priced (`admin/plans.go`, £20/seat/month,
+no seat cap) and checkout-purchasable through the exact same Odoo mechanism as
+Team — no product reason to gate it behind sales. Account owner confirmed the
+£20/seat figure as decided, not the placeholder the code comment had flagged
+it as. Enterprise's "Contact sales" CTA on `pricing/index.html` is now "Start
+on Enterprise" → `https://mind-api.dfens.ai/portal/?plan=enterprise`, price
+shown alongside Team's. `contact/index.html`'s note-box and the pricing
+page's FAQ/#access copy updated to describe all three tiers as self-serve.
+`PRODUCT.md`'s Commercial model and Undecided sections updated to mark the
+price confirmed.

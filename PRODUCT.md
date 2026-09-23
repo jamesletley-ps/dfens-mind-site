@@ -27,9 +27,9 @@ instead of each session starting from zero.
 
 This repository is the marketing site, not the engine — the engine lives in
 the public `dfens-mind` repo. The site's job is to move a qualified visitor
-into self-serve signup (Individual, Team) through the live customer portal,
-or into contact for Enterprise (see Capabilities and Constraints — the web
-portal shipped to production 2026-09-22).
+into self-serve signup through the live customer portal — every tier,
+Individual, Team, and Enterprise, checks out the same way (see Capabilities
+and Constraints — the web portal shipped to production 2026-09-22).
 
 ## Positioning
 
@@ -135,17 +135,18 @@ defaults):
 - **Individual** — free, hard-capped (500 thoughts / 2,000 embedding calls /
   50MB per month).
 - **Team** — £5/seat/month, up to 20 seats, usage billed rather than capped.
-- **Enterprise** — code comment flags the £20/seat figure as an unconfirmed
-  per-seat assumption, so this site presents Enterprise as **"Custom — contact
-  us"** rather than stating that price. Entitlements: `custom_oauth`,
-  `retention_archive`, `background_scanners` — described functionally on the
-  pricing page, no invented mechanism detail for `background_scanners`
-  specifically, since its exact behavior isn't documented anywhere found in
-  this session's investigation.
+- **Enterprise** — £20/seat/month, no seat cap. **Confirmed 2026-09-23 by the
+  account owner** (the code comment in `admin/plans.go` had flagged this as an
+  unconfirmed assumption; that assumption is now the decided price). Self-serve
+  through the customer portal's Odoo-hosted checkout, same mechanism as Team —
+  no "Contact sales" gate. Entitlements: `custom_oauth`, `retention_archive`,
+  `background_scanners` — described functionally on the pricing page, no
+  invented mechanism detail for `background_scanners` specifically, since its
+  exact behavior isn't documented anywhere found in this session's
+  investigation.
 
 **Undecided, and not to be invented:**
 
-- The £20/seat Enterprise figure (code comment flags it unconfirmed).
 - Exact mechanism of the `background_scanners` entitlement — which sources
   it connects to, how capture is triggered, what it scans. The one-sentence
   functional description (see Capabilities, above) is presented as current;
@@ -185,7 +186,8 @@ skills tools) during this site's build, 2026-09-20.
   rather than a separate auth system — see that repo's `TODOS.md` for the
   phased plan.~~ (Superseded: it shipped as `portal.py` in the existing
   Python service, not a separate `ui-portal/` SPA.)
-- No confirmed Enterprise per-seat price.
+- ~~No confirmed Enterprise per-seat price.~~ (Superseded 2026-09-23: £20/seat/month,
+  confirmed by the account owner — see Commercial model, above.)
 - `background_scanners`'s exact mechanism (sources, triggers, scan
   behavior) — the one-line functional description is a deliberate,
   logged exception (see Capabilities, above); don't extend it further
