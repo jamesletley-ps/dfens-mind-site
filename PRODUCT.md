@@ -104,11 +104,14 @@ real org/role/grant model underneath it — not a flat notes file per repo.
   Starlette + Jinja2, same-origin at `https://mind-api.dfens.ai/portal/`, not a
   separate SPA or subdomain): sign in via the existing OIDC/OAuth 2.1 stack,
   create an organization (defaults to Individual, free, active immediately),
-  upgrade to Team via the same Odoo-hosted checkout `start_checkout` uses,
-  buy additional seats, mint/revoke API keys, invite/remove members
-  (seat-capped), and grant/revoke restricted-context access. This is now the
-  genuine self-serve signup path this site's CTAs point at — supersedes the
-  earlier "no web portal yet" framing below.
+  upgrade to Team/Enterprise via the same Odoo-hosted checkout `start_checkout`
+  uses, buy additional seats, mint/revoke API keys, invite/remove members, and
+  grant/revoke restricted-context access. This is now the genuine self-serve
+  signup path this site's CTAs point at — supersedes the earlier "no web
+  portal yet" framing below. **Update 2026-09-23:** Team's invite/seat-cap
+  gate is being removed (see Commercial model, below) — the portal code path
+  itself doesn't change, only whether `plans.seat_cap` is set for the `team`
+  row it reads.
 - Billing: `start_checkout` → Go admin-service → Odoo-hosted checkout,
   reconciled hourly via a Cloud Run job. Same Odoo instance/pattern as sibling
   product ai-firewall. Inbound Odoo webhook path is deliberately not wired
@@ -134,7 +137,22 @@ defaults):
 
 - **Individual** — free, hard-capped (500 thoughts / 2,000 embedding calls /
   50MB per month).
-- **Team** — £5/seat/month, up to 20 seats, usage billed rather than capped.
+- **Team** — £5/seat/month, **no seat cap** (**Decision 2026-09-23 by the
+  account owner:** the prior 20-seat cap was removed — `admin/plans.go`'s
+  `team` `PlanRecord` no longer sets `SeatCap`, same shape as Enterprise's
+  `nil`/unlimited). Usage billed rather than capped. Also now lists
+  **context-linked skill distribution** as a Team-tier pricing-page feature
+  (skills scoped to a context, per the existing context/grant model) — this
+  is positioning, not a new plan-gated entitlement: the underlying skill
+  tools (`create_skill`/`get_skill`/`list_skills`/…) are already available on
+  every tier, ungated in `admin/plans.go`'s `Features` map. **Known gap
+  (2026-09-23):** `store.SeedPlans` only inserts a plan row once
+  (`ON CONFLICT (id) DO NOTHING`) — the code change doesn't retroactively
+  raise the cap on an already-seeded staging/production `team` row; that
+  needs a manual admin-console edit (`PUT /api/v1/plans/team`) before the
+  live product actually matches this site's claim. Tracked in
+  `dfens-mind/TODOS.md` ("Production 'team' plan row still has
+  seat_cap=20…").
 - **Enterprise** — £20/seat/month, no seat cap. **Confirmed 2026-09-23 by the
   account owner** (the code comment in `admin/plans.go` had flagged this as an
   unconfirmed assumption; that assumption is now the decided price). Self-serve
@@ -188,6 +206,10 @@ skills tools) during this site's build, 2026-09-20.
   Python service, not a separate `ui-portal/` SPA.)
 - ~~No confirmed Enterprise per-seat price.~~ (Superseded 2026-09-23: £20/seat/month,
   confirmed by the account owner — see Commercial model, above.)
+- **Team's "no seat cap" claim (2026-09-23):** true in `admin/plans.go`'s
+  source, not yet true for every already-seeded environment — see the
+  Commercial model section's "Known gap" note, above. Don't treat this site
+  going live as proof the backend caught up; check `dfens-mind/TODOS.md`.
 - `background_scanners`'s exact mechanism (sources, triggers, scan
   behavior) — the one-line functional description is a deliberate,
   logged exception (see Capabilities, above); don't extend it further

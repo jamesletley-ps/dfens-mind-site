@@ -105,3 +105,20 @@ shown alongside Team's. `contact/index.html`'s note-box and the pricing
 page's FAQ/#access copy updated to describe all three tiers as self-serve.
 `PRODUCT.md`'s Commercial model and Undecided sections updated to mark the
 price confirmed.
+
+**2026-09-23 (same day):** Team's 20-seat cap removed and "context-linked
+skill distribution" added as a Team pricing-page feature, both account-owner
+decisions. Backend: `dfens-mind/admin/plans.go`'s `team` `PlanRecord` no
+longer sets `SeatCap` (nil = unlimited, same shape Enterprise already had).
+This site: `pricing/index.html` (meta description, Team's `tier-price` now
+"no seat cap" matching Enterprise's phrasing, Team's stale "Up to 20 seats on
+one organization" bullet swapped for "Context-linked skill distribution
+across your team's tools", Enterprise's tier-note/tier-list de-duplicated
+now that seat count no longer distinguishes it from Team) and `index.html`'s
+`#pricing-teaser` sub-copy. `PRODUCT.md`'s Commercial model updated —
+including a flagged gap: `dfens-platform/store`'s `SeedPlans` is
+insert-only (`ON CONFLICT (id) DO NOTHING`), so this code change alone does
+**not** raise the cap on an already-seeded staging/production `team` plan
+row; see `dfens-mind/TODOS.md`'s "Production 'team' plan row still has
+seat_cap=20 — needs a manual console edit" entry for the (deliberately
+manual, not scripted) fix.
