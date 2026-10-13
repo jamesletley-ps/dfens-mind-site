@@ -57,6 +57,7 @@
       <li><a href="#contexts">Context model</a></li>
       <li><a href="#orgs">Orgs &amp; roles</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#connectors">Connectors</a></li>
       <li><a href="#residency">Data residency</a></li>
     </ul>
   </nav>
@@ -119,7 +120,11 @@
     <p>Sign-in federates through one or more standards-compliant OIDC providers —
     Google, Okta, Microsoft Entra, or a self-hosted identity provider — configured
     per deployment. With exactly one provider configured, sign-in goes straight to
-    it; with more than one, a picker shows first.</p>
+    it; with more than one, an email-first page routes you by domain, or shows a
+    picker. Where no provider is mapped to your domain, you can also sign in
+    with an email address and password (verified by emailed code, with
+    self-service password reset). Invited members get an invite email and can
+    set their own password.</p>
     <p>Behind that federated login, Integrated AI runs its own minimal OAuth 2.1
     authorization server, so MCP clients get standard dynamic client registration
     and an authorization-code + PKCE flow. It mints its own RS256-signed JWTs as
@@ -127,14 +132,14 @@
     provider's tokens never leave the login exchange.</p>
     <div class="note-box">
       <span class="nb-label">Enterprise-only</span>
-      <p>Bringing your own identity provider (<code>custom_oauth</code>) — a
-      dedicated Okta, Entra, or self-hosted OIDC client for your org, rather
-      than signing in through our shared provider — is an Enterprise
-      entitlement, along with configurable retention &amp; archival
-      (<code>retention_archive</code>) and background scanners that
-      auto-capture context from your team's other tools
-      (<code>background_scanners</code>). Individual and Team don't include
-      these; sign-in itself works the same on every tier. See
+      <p>Bringing your own identity provider (<code>custom_oauth</code>) — an
+      Okta, Entra, Google Workspace or other OIDC provider that your org's
+      owners and admins configure themselves in the portal, with email-domain
+      routing — is an Enterprise entitlement. So are read-only context sharing,
+      configurable retention &amp; archival (<code>retention_archive</code>) and
+      <a href="#connectors">connectors</a> for Google Drive, SharePoint and
+      OneDrive (<code>background_scanners</code>). Individual and Team don't
+      include these; sign-in itself works the same on every tier. See
       <a href="/pricing/">pricing</a> for the full breakdown.</p>
     </div>
 
@@ -147,8 +152,8 @@
       <table>
         <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
         <tbody>
-          <tr><td><code>list_contexts()</code></td><td>Every context the caller can access, as <code>{id, name, description}</code>.</td></tr>
-          <tr><td><code>create_context(org_id, name, description, instructions?)</code></td><td>Create a new context, org-visible by default.</td></tr>
+          <tr><td><code>list_contexts()</code></td><td>Every context the caller can access, as <code>{id, name, description, instructions, keywords, visibility, is_personal}</code>.</td></tr>
+          <tr><td><code>create_context(org_id, name, description, instructions?, keywords?)</code></td><td>Create a new context, org-visible by default.</td></tr>
           <tr><td><code>capture_thought(context, content, topics?, people?)</code></td><td>Save a new thought.</td></tr>
           <tr><td><code>search_thoughts(context, query, limit?)</code></td><td>Semantic search within a context.</td></tr>
           <tr><td><code>browse_recent(context, limit?, topic?)</code></td><td>List recent thoughts, optionally filtered by topic.</td></tr>
@@ -160,6 +165,7 @@
           <tr><td><code>invite_member(org_id, email, role?)</code></td><td>Add a teammate by email — they get access on their next sign-in, no separate accept step. Owner/admin only.</td></tr>
           <tr><td><code>admin_create_api_key(org_id, name, user_email?)</code></td><td>Issue an org API key for an unattended harness. The raw key is returned once, on creation. Owner/admin only.</td></tr>
           <tr><td><code>admin_list_api_keys(org_id)</code> / <code>admin_revoke_api_key(org_id, key_id)</code></td><td>List or revoke org API keys (metadata only — the raw key is never shown again). Owner/admin only.</td></tr>
+          <tr><td><code>buy_seats(org_id, additional_seats)</code></td><td>Start a hosted checkout for extra seats on a paid plan. Owner/admin only.</td></tr>
           <tr><td><code>subscription_status(org_id)</code></td><td>Current plan, usage (thought count, storage), and billing state.</td></tr>
           <tr><td><code>start_checkout(org_id, plan_id)</code></td><td>Start a hosted checkout to move the org onto a paid plan. Owner/admin only.</td></tr>
         </tbody>
@@ -184,7 +190,13 @@
     </ul>
     <p>A context also carries a human-readable <code>name</code> and
     <code>description</code> — not necessarily unique — that a caller uses to pick
-    the right id from a <code>list_contexts()</code> result.</p>
+    the right id from a <code>list_contexts()</code> result. Optional
+    <code>instructions</code> (when and how to read or write the context) and
+    <code>keywords</code> (explicit trigger words) help an agent choose.</p>
+    <p>On Enterprise, <code>admin_grant_context(context, user_email, access_level?)</code>
+    takes <code>access_level</code> <code>write</code> (the default) or
+    <code>read</code>, for view-only access that can search and browse but not
+    capture, edit or delete.</p>
 
     <h2 id="orgs">Orgs &amp; roles</h2>
     <p>Roles are <code>owner</code>, <code>admin</code>, and <code>member</code>. Every role
@@ -213,10 +225,9 @@
     (<code>list_skill_files</code>/<code>get_skill_file</code>).</p>
     <p>Works identically from a signed-in human session or an org API key, so
     an unattended harness can pull a skill on its own — no human needs to be
-    signed in. Minting <em>additional</em> named-service API keys for more
-    harnesses is still CLI-only on our side today, not a self-serve web
-    action — get in touch if you need more than the one key the signup
-    bootstrap above gives you.</p>
+    signed in. Owners and admins can mint and revoke named API keys for more
+    harnesses themselves, from the customer portal or with
+    <code>admin_create_api_key</code>.</p>
 
     <h3>Making a skill runnable, not just stored</h3>
     <p>The tools above are storage — pulling a skill into a session is still
@@ -261,6 +272,53 @@ as its full body, in place of these instructions.</pre>
     </div>
     <p>Either way, this is a one-time setup per harness install, not per
     organization or session.</p>
+
+    <h2 id="connectors">Connectors</h2>
+    <p>Enterprise orgs can sync existing documents into memory instead of
+    capturing them by hand. A synced file is split into chunks, embedded in your
+    org's region, and stored as ordinary thoughts, so <code>search_thoughts</code>
+    and <code>browse_recent</code> find it with no new tools. Edits, moves and
+    deletions at the source are picked up on the next sync, and content the
+    connector can no longer read is removed from search.</p>
+    <ul>
+      <li><strong>Google Drive</strong> — shared drives or individual folders. A
+      Workspace admin authorises our service account for read-only Drive access
+      (domain-wide delegation). No per-user tokens are stored.</li>
+      <li><strong>Microsoft 365</strong> — SharePoint sites (every document
+      library on the site) and OneDrive. A tenant admin grants consent, ideally
+      scoped to named sites (<code>Sites.Selected</code>). No per-user tokens
+      are stored.</li>
+    </ul>
+    <p>Owners and admins add sources from the Connectors page of the
+    <a href="https://mind-api.dfens.ai/portal/">customer portal</a>, can pause a
+    source or trigger a sync, and see run history. Each source maps to exactly
+    one context in your org.</p>
+    <h3>What gets searched</h3>
+    <p>Plain text, Markdown, CSV, JSON, HTML, Google Docs, Slides and Sheets (first
+    tab only), and Word, PowerPoint and Excel files. PDFs and unsupported types
+    are recorded as skipped rather than failing the sync; PDF text extraction is
+    not available yet.</p>
+    <p>Results from a synced file include a <code>source</code> object
+    (<code>provider</code>, <code>url</code>, <code>document_id</code>,
+    <code>chunk_index</code>, <code>version</code>, <code>synced_at</code>).
+    <code>update_thought</code> and <code>delete_thought</code> refuse these
+    thoughts, since the connector owns the content.</p>
+    <div class="note-box">
+      <span class="nb-label">Access control</span>
+      <p>Anyone who can access the mapped context can find the synced content,
+      regardless of who could open the original file. Map sensitive sources to a
+      <code>restricted</code> context and grant it deliberately. Per-document
+      permission mirroring is not available yet.</p>
+    </div>
+    <h3>AI distillation and credits</h3>
+    <p>Optionally, per organization, a connector can distil each document into
+    focused notes with topics and people instead of storing raw chunks. This is
+    off by default. It uses AI model calls, which are metered per organization
+    and debited from a prepaid credit balance (1 credit = £1). When the balance
+    reaches zero, distillation pauses and resumes once credits are added; plain
+    chunk syncing is never affected. Credits are currently added by our team on
+    request. Each org also has a monthly cap on synced chunks and a cap on the
+    number of sources.</p>
 
     <h2 id="residency">Data residency</h2>
     <p>Set per organization at creation, and fixed after that:</p>
