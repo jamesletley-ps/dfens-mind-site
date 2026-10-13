@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing — Integrated AI</title>
-<meta name="description" content="Integrated AI pricing. Individual is free for a single user. Team is £5 per seat per month, no seat cap, with context-linked skill distribution. Enterprise is £20 per seat per month and adds bring-your-own OIDC, configurable retention, and bots that automatically capture context. All three self-serve through the customer portal.">
+<meta name="description" content="Integrated AI pricing. Individual is free for a single user. Team is £5 per seat per month, no seat cap, with context-linked skill distribution. Enterprise is £20 per seat per month and adds bring-your-own OIDC, read-only context sharing, configurable retention, and Google Drive, SharePoint and OneDrive connectors. All three self-serve through the customer portal.">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><line x1='50' y1='54' x2='50' y2='18' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='22' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='78' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><circle cx='50' cy='18' r='10' fill='%2322c55e'/><circle cx='22' cy='68' r='10' fill='%2322c55e'/><circle cx='78' cy='68' r='10' fill='%2322c55e'/><circle cx='50' cy='54' r='16' fill='%2308090B' stroke='%2322c55e' stroke-width='5'/></svg>">
 </head>
@@ -52,9 +52,10 @@
     <p class="lede">
       Individual is free, capped for a single user. Team adds seats and removes
       the cap. Enterprise adds the entitlements a bigger org actually asks for:
-      your own identity provider, configurable retention, and bots that
-      automatically capture context in the background. Every tier runs the
-      same engine and the same tool surface.
+      your own identity provider, read-only context sharing, configurable
+      retention, and connectors that sync your Google Drive, SharePoint and
+      OneDrive documents into memory. Every tier runs the same engine and the
+      same core tool surface.
     </p>
   </div>
 </div>
@@ -92,12 +93,14 @@
     <div class="tier">
       <div class="tier-name">Enterprise</div>
       <div class="tier-price"><span class="amt">£20</span><span class="per">per seat / month · no seat cap</span></div>
-      <p class="tier-note">For organizations that need the entitlements below — bring-your-own identity, configurable retention, or automatic background capture.</p>
+      <p class="tier-note">For organizations that need the entitlements below — bring-your-own identity, read-only sharing, configurable retention, or document connectors.</p>
       <ul class="tier-list">
         <li>Everything in Team, plus:</li>
-        <li><code>custom_oauth</code> — bring your own OIDC / SSO provider</li>
+        <li><code>custom_oauth</code> — bring your own OIDC / SSO provider, configured by your admins in the portal</li>
+        <li>Read-only context sharing — grant a teammate view-only access to a restricted context</li>
         <li><code>retention_archive</code> — configurable retention &amp; archival, beyond the platform default</li>
-        <li><code>background_scanners</code> — bots that automatically capture context into memory from your team's other tools, in the background</li>
+        <li>Connectors (<code>background_scanners</code>) — sync Google Drive, SharePoint and OneDrive into memory automatically, kept current in the background</li>
+        <li>Optional AI distillation of synced documents, billed from prepaid credits</li>
       </ul>
       <a class="btn ghost tier-cta" href="https://mind-api.dfens.ai/portal/?plan=enterprise">Start on Enterprise</a>
     </div>
@@ -132,7 +135,9 @@
       <div class="qa"><h3>Can we move from Individual to Team later?</h3><p>Yes. Your context ids, org id, and every thought already captured stay exactly as they are — moving tiers changes billing and caps, not the data.</p></div>
       <div class="qa"><h3>How does billing work?</h3><p>Team and Enterprise are billed per seat, per month, through our billing partner Odoo — the same billing infrastructure DFENS AI Ltd already runs for <a href="https://dfens.ai">dfens.ai</a>. We never handle card data directly.</p></div>
       <div class="qa"><h3>Where is our data stored?</h3><p>You choose a data-residency region at org creation: <code>europe-west1</code>, <code>us-central1</code>, or <code>asia-northeast1</code>. Each is a genuinely separate deployment, not a latency fan-out.</p></div>
-      <div class="qa"><h3>What exactly is "background scanning"?</h3><p>An Enterprise entitlement: bots that automatically capture context into memory from your team's other tools, so nobody has to remember to write it down. We'll walk through exactly what it covers for your use case in the Enterprise conversation.</p></div>
+      <div class="qa"><h3>What do the connectors sync?</h3><p>An Enterprise entitlement. An org admin connects Google Drive (shared drives or folders) or Microsoft 365 (SharePoint sites, with every document library, or OneDrive) and maps each source to one context. Documents are chunked, embedded and kept in sync as they change or are deleted; search results link back to the source file. Text, Markdown, CSV, JSON, HTML, and Word, PowerPoint and Excel files are supported. <strong>PDFs are not extracted yet</strong> and are skipped.</p></div>
+      <div class="qa"><h3>What is AI distillation, and how is it billed?</h3><p>Optional, per organization, and off by default. Instead of storing raw chunks, connectors can distil each document into focused notes with topics and people. That uses AI model calls, which are metered per organization and debited from a prepaid credit balance (1 credit = £1). If the balance runs out, distillation pauses and resumes when credits are added; plain syncing is unaffected. Credits are currently added for you by our team rather than bought in the portal. Each org also has a monthly cap on synced chunks and a cap on sources.</p></div>
+      <div class="qa"><h3>Who can see synced documents?</h3><p>Anyone with access to the context a source is mapped to — which may be more people than could open the original file. Map sensitive sources to a <code>restricted</code> context. Per-document permission mirroring is not available yet.</p></div>
     </div>
   </div>
 </section>

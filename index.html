@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Integrated AI — one shared memory for every AI tool</title>
-<meta name="description" content="Integrated AI (by DFENS AI) gives your team or enterprise org a shared, semantically searchable memory and a shared skill library, across every MCP-speaking AI tool — Claude, Claude Code, or anything else.">
+<meta name="description" content="Integrated AI (by DFENS AI) gives your team or enterprise org a shared, semantically searchable memory and a shared skill library, across every MCP-speaking AI tool — Claude, Claude Code, or anything else. Enterprise orgs can also sync Google Drive, SharePoint and OneDrive straight into it.">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><line x1='50' y1='54' x2='50' y2='18' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='22' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><line x1='50' y1='54' x2='78' y2='68' stroke='%2322c55e' stroke-width='6' stroke-linecap='round'/><circle cx='50' cy='18' r='10' fill='%2322c55e'/><circle cx='22' cy='68' r='10' fill='%2322c55e'/><circle cx='78' cy='68' r='10' fill='%2322c55e'/><circle cx='50' cy='54' r='16' fill='%2308090B' stroke='%2322c55e' stroke-width='5'/></svg>">
 </head>
@@ -199,20 +199,24 @@
         unattended harness can pull skills on its own too.</p>
         <ul>
           <li>Versioned, with bundled scripts/references/assets</li>
-          <li>Provisioning additional service keys for more harnesses: still set up
-          directly by us, not self-serve yet</li>
+          <li>Issue and revoke API keys for more harnesses yourself, from the
+          portal or the MCP client</li>
         </ul>
       </div>
       <div class="mandate">
         <div class="m-ico">🤖</div>
-        <h3>Automatic capture <span style="color:var(--muted); font-weight:600; font-size:12px; font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase;">— Enterprise</span></h3>
-        <p>Bots that capture context into memory automatically from your team's
-        other tools, running in the background — instead of relying on someone
-        remembering to write it down.</p>
+        <h3>Document connectors <span style="color:var(--muted); font-weight:600; font-size:12px; font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase;">— Enterprise</span></h3>
+        <p>Sync Google Drive, SharePoint and OneDrive into memory and keep it
+        current in the background. Your documents become searchable through the
+        same <code>search_thoughts</code> call, each hit linking back to its
+        source file — no one has to remember to write it down.</p>
         <ul>
-          <li><code>background_scanners</code> entitlement</li>
-          <li>Exact sources and triggers scoped per org, in the Enterprise
-          conversation</li>
+          <li>Google shared drives and folders; SharePoint sites (every document
+          library) and OneDrive</li>
+          <li>Each source maps to one context, so that context's existing access
+          rules decide who can search it</li>
+          <li>Optional AI distillation turns documents into focused notes,
+          billed from prepaid credits</li>
         </ul>
       </div>
     </div>
@@ -235,12 +239,15 @@
           <tr><td><code>browse_recent</code></td><td class="dim">List recent thoughts, optionally filtered by topic.</td></tr>
           <tr><td><code>view_stats</code></td><td class="dim">Total count, top topics, most recent thought.</td></tr>
           <tr><td><code>update_thought</code> / <code>delete_thought</code></td><td class="dim">Revise or remove an existing thought.</td></tr>
+          <tr><td><code>buy_seats</code> / <code>start_checkout</code> / <code>subscription_status</code></td><td class="dim">Manage your plan and seats from the MCP client, via a hosted checkout. Owner/admin only.</td></tr>
           <tr><td><code>create_skill</code> / <code>get_skill</code> / <code>list_skills</code></td><td class="dim">Versioned, shared working practices scoped to a context — usable from a human session or an org API key.</td></tr>
         </tbody>
       </table>
     </div>
     <p class="tbl-note">Org-management tools (membership, roles, context grants) sit behind
-    <code>owner</code>/<code>admin</code> role checks. Full reference: <a href="/documentation/">documentation</a>.</p>
+    <code>owner</code>/<code>admin</code> role checks. Thoughts synced from Drive or SharePoint carry a
+    <code>source</code> object (provider, link, version) and are read-only to
+    <code>update_thought</code>/<code>delete_thought</code> — the connector owns that content. Full reference: <a href="/documentation/">documentation</a>.</p>
   </div>
 </section>
 
@@ -276,14 +283,17 @@
       <ul>
         <li><strong>Federated OIDC sign-in.</strong> Google, Okta, Microsoft Entra, or a self-hosted
         identity provider — any standards-compliant issuer works via
-        <code>.well-known/openid-configuration</code> discovery.</li>
+        <code>.well-known/openid-configuration</code> discovery. Enterprise orgs
+        can connect their own provider themselves from the portal, and
+        email/password sign-in is available where no provider is mapped.</li>
         <li><strong>Our own OAuth 2.1 authorization server.</strong> Dynamic client registration and
         the standard authorization-code + PKCE flow, minting RS256-signed JWTs as the
         access/refresh tokens clients actually use.</li>
         <li><strong>Postgres + pgvector, row-level tenancy.</strong> Every context and thought
         carries an <code>org_id</code>; access checks run on every call.</li>
         <li><strong>Data residency.</strong> <code>europe-west1</code>, <code>us-central1</code>,
-        <code>asia-northeast1</code> — set per organization at creation.</li>
+        <code>asia-northeast1</code> — set per organization at creation. Embeddings
+        and AI distillation run in your org's region too.</li>
       </ul>
       <div class="term">
         <div class="term-bar"><span></span><span></span><span></span><span class="t">auth — every call</span></div>
@@ -304,8 +314,8 @@
     <h2>Start free. Scale by seat.</h2>
     <p class="sub">Individual is free, capped for a single user. Team is £5 per seat, per month,
     no seat cap, with context-linked skill distribution across your team's tools.
-    Enterprise adds bring-your-own OIDC, configurable retention, and bots that
-    automatically capture context in the background.</p>
+    Enterprise adds bring-your-own OIDC, read-only context sharing, configurable
+    retention, and Google Drive / SharePoint / OneDrive connectors.</p>
     <div class="cta-row" style="margin-top:8px;"><a class="btn ghost" href="/pricing/">See full pricing →</a></div>
   </div>
 </section>
