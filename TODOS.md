@@ -122,3 +122,20 @@ insert-only (`ON CONFLICT (id) DO NOTHING`), so this code change alone does
 row; see `dfens-mind/TODOS.md`'s "Production 'team' plan row still has
 seat_cap=20 — needs a manual console edit" entry for the (deliberately
 manual, not scripted) fix.
+
+## ~~Update site for connectors and post-09-23 capabilities~~ — done 2026-10-13
+
+`index.html`, `pricing/index.html`, `documentation/index.html` now describe
+Drive/SharePoint/OneDrive connectors (live in prod per the account owner),
+optional AI distillation and prepaid credits, self-service custom OIDC,
+read-only context sharing, password sign-in, `buy_seats`, and API-key
+self-service. New docs section `#connectors`. `PRODUCT.md` and `README.md`
+re-verified against `dfens-mind` as of this date.
+
+**Still to do / watch:**
+- Revisit copy when PDF extraction ships (`dfens-mind/TODOS.md`), when
+  self-serve `buy_credits` exists, and if Microsoft publisher verification
+  changes the consent flow.
+- Team "no seat cap" still depends on the manual prod plan-row edit above.
+- `documentation/index.html` still lists `invite_member`; `server.py` exposes
+  `admin_add_org_member` — reconcile when next touching the tool table.

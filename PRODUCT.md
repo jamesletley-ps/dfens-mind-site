@@ -63,7 +63,7 @@ real org/role/grant model underneath it — not a flat notes file per repo.
 ## Capabilities and Constraints
 
 **Product capabilities that are real and citable** (verified against
-`../dfens-mind`'s code as of 2026-09-20):
+`../dfens-mind`'s code as of 2026-10-13):
 
 - Core memory tools: `capture_thought`, `search_thoughts` (semantic, Vertex AI
   `gemini-embedding-001`), `browse_recent`, `view_stats`, `update_thought`,
@@ -116,21 +116,36 @@ real org/role/grant model underneath it — not a flat notes file per repo.
   reconciled hourly via a Cloud Run job. Same Odoo instance/pattern as sibling
   product ai-firewall. Inbound Odoo webhook path is deliberately not wired
   yet — not a claim to make on the site.
-- `background_scanners` (Enterprise plan entitlement, `admin/plans.go`) is,
-  as of this site's code (2026-09-20), only a boolean feature flag — no
-  scanner service, ingestion bot, or automatic memory-population mechanism
-  exists in `dfens-mind` yet. **Decision 2026-09-20 (explicit, from the
-  account owner):** the site describes this as a current capability —
-  "bots that automatically capture context into memory from your team's
-  other tools" — ahead of the code landing, because the account owner is
-  building it now and expects it live by the time this site deploys. This
-  is a deliberate exception to this doc's usual "verified in code first"
-  rule, made knowingly, not a fabrication slipping through. Still don't
-  invent mechanism/source-integration specifics beyond that one sentence —
-  exactly which tools it connects to, how it's triggered, and what it
-  scans remain undecided (see Undecided, below). If this capability still
-  isn't live in `dfens-mind` by the time the site is promoted publicly,
-  this copy needs to be pulled or re-scoped back to "coming."
+- **Connectors (`background_scanners`, Enterprise) — live in production,
+  confirmed by the account owner 2026-10-13.** Supersedes the earlier
+  2026-09-20 "described ahead of the code" exception. Verified against
+  `dfens-mind/connectors/` and `docs/designs/enterprise-connectors.md`:
+  Google Drive (shared drives and folders, domain-wide delegation, keyless
+  signing) and Microsoft 365 (SharePoint sites, every document library, and
+  OneDrive; admin consent, `Sites.Selected` preferred). Org-level admin
+  consent, no per-user tokens. Each source maps to exactly one context, whose
+  visibility/grants decide who can search; no per-document ACL mirroring.
+  Synced content is stored as ordinary thoughts with a `source` object, and
+  `update_thought`/`delete_thought` refuse them. Managed from the portal
+  Connectors page (owner/admin, Enterprise-gated). Supported types: text,
+  markdown, csv, json, html, Google Docs/Slides/Sheets (first tab), docx,
+  pptx, xlsx. **PDFs are skipped (no extractor yet — do not claim PDF
+  support).** Per-org monthly chunk cap and source cap exist (env defaults
+  250,000 chunks / 10 sources, per-org overrides).
+- **AI distillation and credits (2026-10-13):** optional per-org switch, off
+  by default, turning synced files into focused notes via the AI Firewall.
+  Metered per org (`connector_usage_events`) and debited from a prepaid
+  `credit_ledger` (1 credit = £1); sync of distilling sources pauses at zero
+  balance, plain-chunk orgs are never gated. Credits are granted by staff
+  today — there is **no self-serve credit purchase** (`buy_credits` not
+  built), so copy must not imply one.
+- **Other additions since 2026-09-23:** self-service custom OIDC from the
+  portal (Enterprise `custom_oauth`), read-only context sharing via
+  `access_level` on `admin_grant_context` (Enterprise), email/password
+  sign-in with domain routing, invite and reset emails, `buy_seats` MCP tool,
+  `admin_create_api_key` MCP tool + portal key management, embeddings and
+  distillation pinned to the org's region.
+- The internal staff admin console is deliberately not marketed.
 
 **Commercial model** (`admin/plans.go` in `dfens-mind`, real committed
 defaults):
@@ -158,17 +173,10 @@ defaults):
   unconfirmed assumption; that assumption is now the decided price). Self-serve
   through the customer portal's Odoo-hosted checkout, same mechanism as Team —
   no "Contact sales" gate. Entitlements: `custom_oauth`, `retention_archive`,
-  `background_scanners` — described functionally on the pricing page, no
-  invented mechanism detail for `background_scanners` specifically, since its
-  exact behavior isn't documented anywhere found in this session's
-  investigation.
+  `background_scanners` (connectors), `read_only_context_sharing`.
 
 **Undecided, and not to be invented:**
 
-- Exact mechanism of the `background_scanners` entitlement — which sources
-  it connects to, how capture is triggered, what it scans. The one-sentence
-  functional description (see Capabilities, above) is presented as current;
-  everything past that sentence is still undecided.
 - Public availability / GA date — the product has no live paying customer yet
   (`dfens-mind/TODOS.md`).
 - Trademark clearance on "Integrated AI".
@@ -210,10 +218,8 @@ skills tools) during this site's build, 2026-09-20.
   source, not yet true for every already-seeded environment — see the
   Commercial model section's "Known gap" note, above. Don't treat this site
   going live as proof the backend caught up; check `dfens-mind/TODOS.md`.
-- `background_scanners`'s exact mechanism (sources, triggers, scan
-  behavior) — the one-line functional description is a deliberate,
-  logged exception (see Capabilities, above); don't extend it further
-  without a new decision.
+- PDF extraction, per-document ACL mirroring, self-serve credit purchase and
+  change-notification (webhook) sync are **not built**; don't claim them.
 
 ## Accessibility & Inclusion
 

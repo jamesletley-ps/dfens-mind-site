@@ -33,7 +33,7 @@ marketing/BRAND.md      Names, domains, tagline, voice, palette — marked place
 Every capability claim on this site was verified against `../dfens-mind`'s
 actual code (not just its README, which lags the code — e.g. the skill
 distribution tools exist in `server.py` before the README's own tool table
-mentions them) as of 2026-09-20:
+mentions them) as of 2026-10-13:
 
 - Core tools: `capture_thought`, `search_thoughts` (semantic, Vertex AI
   `gemini-embedding-001`), `browse_recent`, `view_stats`, `update_thought`,
@@ -46,9 +46,8 @@ mentions them) as of 2026-09-20:
   server minting RS256 JWTs.
 - Storage: Postgres + pgvector, row-level multi-tenant ownership; data
   residency across three regions.
-- Plans (`admin/plans.go`): Individual free/hard-capped, Team £5/seat/month up
-  to 20 seats, Enterprise custom (the code's £20/seat figure is flagged
-  unconfirmed, so the site doesn't state it).
+- Plans (`admin/plans.go`): Individual free/hard-capped, Team £5/seat/month with
+  no seat cap, Enterprise £20/seat/month (confirmed 2026-09-23).
 - Skill distribution tools are real and shipped. As of 2026-09-20
   (`dfens-mind/TODOS.md`, "Approach B"), they work from a human OIDC session
   or an org API key identically — the site describes this as live, not a
@@ -57,15 +56,16 @@ mentions them) as of 2026-09-20:
   tools) that create + verify an org and return a live API key, defaulting
   to the free Individual plan. `start_checkout`/`subscription_status` *are*
   real MCP tools, so upgrading plans happens without leaving the MCP client.
-- `background_scanners` (Enterprise) is, in the code, still just a boolean
-  plan flag with no implementation. The site describes it as a current
-  capability anyway — see `PRODUCT.md`'s Capabilities section for why
-  (explicit, logged exception: it's being built now, expected live by
-  deploy) and the exact one-sentence boundary on what's said about it.
+- Connectors (`background_scanners`, Enterprise): Google Drive and
+  SharePoint/OneDrive sync, live in production as of 2026-10-13. Optional AI
+  distillation is metered against prepaid credits. PDFs are not extracted.
+  See `PRODUCT.md` for the exact boundaries.
+- Also on the site: self-service custom OIDC, read-only context sharing,
+  email/password sign-in, `buy_seats`, API-key self-service.
 
-Nothing on the site asserts a capability the engine doesn't have. There's no
-self-serve *web* portal, but there is a real self-serve signup path over
-plain HTTP (never described as an MCP tool call, since it isn't one).
+Nothing on the site asserts a capability the engine doesn't have. Signup is
+self-serve through the customer portal, with the plain-HTTP bootstrap still
+documented for automation.
 
 ## Preview locally
 
